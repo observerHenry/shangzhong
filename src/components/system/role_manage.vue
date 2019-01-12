@@ -1,5 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-    <div>
+    <div style="width:100%;height: 100%; ">
         <el-col class="well well-lg" style="background-color: white;">
             <div align="right" style="margin-bottom: 20px">
                 <el-button
@@ -82,7 +82,7 @@
                 <el-col :span="24">
                     <el-form-item>
                         <el-row style="background-color: #F9FAFC; border-radius: 5px;">
-                            <el-col :span="3" s:offset="1">
+                            <el-col :span="3"  :offset="1">
                                 <div style="margin-top: 20px">
                                     <div>
                                         <el-checkbox style="margin-left: 20px"

@@ -77,27 +77,6 @@
 		    },
 
 		    onKeyup(){
-			    if (isStringEmpty(_this.ruleForm2.name) && !isStringEmpty(_this.ruleForm2.account)) {
-//				    $.ajax({
-//					    url: this.submitUrl, //this.queryUserUrl,
-//					    type: 'POST',
-//					    dataType: 'json',
-//					    data: {account: _this.ruleForm2.account},
-//					    success: function (res) {
-//						    _this.isError = res.status == 0;
-//						    if (!_this.isError) {
-//							    _this.ruleForm2.name = res.info.name;//res.data.name;
-//						    }
-//						    else {
-//							    _this.errorMsg = '未找到匹配的姓名！'
-//						    }
-//					    },
-//					    error: function (info) {
-//						    _this.errorMsg = '服务器访问出错';
-//						    _this.isError = true;
-//					    }
-//				    });
-			    }
 			    _this.isError = this.validateForm();
 		    },
 		    reset: function () {
@@ -107,32 +86,45 @@
 		    },
 
 		    login: function () {
-			    this.isError = this.validateForm();
-			    if (!_this.isError) {
-				    $.ajax({
-					    url: _this.submitUrl,
-					    type: 'POST',
-					    dataType: 'json',
-					    data: {
-						    "account": this.ruleForm2.account,
-						    "password": this.ruleForm2.password,
-					    },
-					    success: function (res) {
-						    _this.isError = res.code != 200;
-						    if (!_this.isError) {
-							    sessionStorage.setItem('user', JSON.stringify(res.data));//res.data
-							    _this.$router.push("/home");
-						    }
-						    else {
-							    _this.errorMsg = res.message;// '请输入正确的用户名和密码！'
-						    }
-					    },
-					    error: function (info) {
-						    _this.errorMsg = '服务器访问出错';
-						    _this.isError = true;
-					    }
-				    });
-			    }
+
+			    sessionStorage.setItem('user', JSON.stringify({
+				    "account": "admin",
+				    "password": "admin",
+				    "name": "admin",
+				    "id": 1,
+				    "role": {
+					    "id": 1,
+					    "roleName": "管理员",
+				    },
+				    "roleName": "管理员"
+			    }));//res.data
+			    _this.$router.push("/home");//TEST TODO
+			    // this.isError = this.validateForm();
+//			    if (!_this.isError) {
+//				    $.ajax({
+//					    url: _this.submitUrl,
+//					    type: 'POST',
+//					    dataType: 'json',
+//					    data: {
+//						    "account": this.ruleForm2.account,
+//						    "password": this.ruleForm2.password,
+//					    },
+//					    success: function (res) {
+//						    _this.isError = res.code != 200;
+//						    if (!_this.isError) {
+//							    sessionStorage.setItem('user', JSON.stringify(res.data));//res.data
+//							    _this.$router.push("/home");
+//						    }
+//						    else {
+//							    _this.errorMsg = res.message;// '请输入正确的用户名和密码！'
+//						    }
+//					    },
+//					    error: function (info) {
+//						    _this.errorMsg = '服务器访问出错';
+//						    _this.isError = true;
+//					    }
+//				    });
+//			    }
 		    },
 		    onkeydown: function (e) {
 			    var ev = document.all ? window.event : e;
