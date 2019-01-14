@@ -1,6 +1,6 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml" >
 
-     <router-view style="width: 100%;height: 100%"></router-view >
+     <router-view ></router-view >
 
 </template >
 

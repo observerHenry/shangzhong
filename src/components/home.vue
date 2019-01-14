@@ -1,21 +1,20 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml" >
     <div class="bg" >
         <el-container >
-            <el-header style="background-color: steelblue" >
+            <el-header style="color: white" >
                 <el-row >
                     <el-col :span="2" >
-                        <span style="cursor: pointer;color: #409eff;font-size: 26px; font-weight: bolder; float: left"
+                        <span style="cursor: pointer;font-size: 26px; font-weight: bolder; float: left"
                               @click="goToHome()" >
                         </span >
                     </el-col >
                     <el-col :offset="18" :span="4" >
                         <div >
-                            <label style="font-size: 15px;color: #f4f4f4;font-weight: normal;" >
+                            <label style="font-size: 15px;font-weight: normal;" >
                                 欢迎您
                             </label >
                             <label
 		                            style="font-size: 26px;
-                                    color: #f4f4f4;
                                     cursor: pointer;
                                     font-style: italic;font-weight: normal;
                                     padding-left: 10px"
@@ -28,7 +27,7 @@
                     </el-col >
                     <el-col :span="2" >
                         <button type="button" class="btn btn-link" v-on:click="logout"
-                                style="color: white;float: right;vertical-align: text-bottom;margin-top: 15px" >
+                                style="color: white; float: right;vertical-align: text-bottom;margin-top: 15px" >
                             退出
                         </button >
                     </el-col >
@@ -36,22 +35,23 @@
             </el-header >
             <el-container >
                 <el-aside >
-                <el-menu v-for="root in $router.options.routes" style="background-color: transparent;text-align: left"
-                         :default-active="$route.path" @select="handleSelect" >
-                            <el-submenu v-for="sub in root.children" v-if="!root.hidden" :index="sub.path">
-                                <template slot="title" >
-                                      <i :class="sub.icon" ></i >
-                                      <span >{{sub.meta}}</span >
-                                </template >
-                                <el-menu-item v-for="item in sub.children" :index="item.path"
-                                              style="text-align: left;font-size: 14px; font-weight: bold" >
-                                    {{item.meta}}
-                                </el-menu-item >
-                            </el-submenu >
+                    <el-menu v-for="root in $router.options.routes"
+                             style="background-color: transparent;text-align: left"
+                             :default-active="$route.path" @select="handleSelect" >
+                                <el-submenu v-for="sub in root.children" v-if="!root.hidden" :index="sub.path" >
+                                    <template slot="title" >
+                                          <i :class="sub.icon" ></i >
+                                          <span >{{sub.meta}}</span >
+                                    </template >
+                                    <el-menu-item v-for="item in sub.children" :index="item.path"
+                                                  style="text-align: left;font-size: 14px; font-weight: bold" >
+                                        {{item.meta}}
+                                    </el-menu-item >
+                                </el-submenu >
 
 
                     </el-menu >
-             </el-aside >
+                </el-aside >
                 <router-view ></router-view >
             </el-container >
 	        <!--<el-footer >Footer</el-footer >-->
@@ -308,7 +308,7 @@
 	    created: function () {
 		    this.userinfo = JSON.parse(sessionStorage.getItem('user'));
 		    this.fetchUserRoleScope(this.userinfo.role.id);
-		    console.log(`routes:\r\n${JSON.stringify(_this.$router.options.routes)}`)
+		    // console.log(`routes:\r\n${JSON.stringify(_this.$router.options.routes)}`)
 	    },
 	    mounted: function () {
 //		    setInterval(function getDate() {

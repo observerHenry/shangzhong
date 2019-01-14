@@ -1,7 +1,7 @@
 <template >
     <div class="bg" >
+        <div style="text-align: center;padding-top: 200px;font-size: 36px;color: white;font-weight: bold">上海中学校车管理系统</div>
         <div class="login-container" >
-
             <h3 class="title" >登 录</h3 >
             <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="60px" >
 
@@ -22,11 +22,11 @@
                 <div class="alert alert-danger" v-if="isError" style="margin-top: 10px;padding: 5px;" >
                     {{errorMsg}}!
                 </div >
-                <div style="text-align: center; margin-left: 20px" >
+                <div style="text-align: center;margin-top: 35px" >
                     <!--<el-button type="primary" style="width:35%;" @click.native.prevent="reset"-->
                     <!--&gt;重置-->
                     <!--</el-button>-->
-                    <el-button type="primary" style="width:35%;" @click.native.prevent="login"
+                    <el-button type="primary" style="width:100%;" @click.native.prevent="login"
                     >登录
                     </el-button >
                 </div >
@@ -160,7 +160,7 @@
 	    height: 100%;
 	    /*background: url(assets/bg1.jpg) center !important;
 		background-size: cover;*/
-	    background-image: url("../assets/img/background.jpg");
+	    background-image: url("../assets/img/login_bg_pic.png");
 	    filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
 	    -moz-background-size: 100% 100%;
 	    background-size: 100% 100%;
@@ -170,20 +170,18 @@
 
     .login-container {
 	    /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
-	    -webkit-border-radius: 5px;
-	    border-radius: 5px;
-	    -moz-border-radius: 5px;
+
 	    background-clip: padding-box;
-	    margin-bottom: 20px;
 	    background-color: #F9FAFC;
 	    margin: 180px auto;
-	    border: 2px solid #8492A6;
+        margin-top: 50px;
+
 	    width: 450px;
-	    padding: 35px 35px 15px 35px;
+	    padding: 60px 60px 60px 60px;
     }
 
     .title {
-	    width: 380px;
+	    width: 320px;
 	    margin-bottom: 40px;
 	    text-align: center;
 	    color: #505458;
