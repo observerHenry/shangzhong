@@ -96,7 +96,11 @@
                         <!--{{scope.$index+startRow}}-->
                     <!--</template >-->
                 <!--</el-table-column >-->
-
+                <el-table-column
+                        width="75"
+                        align="center"
+                        type="selection">
+                </el-table-column >
                 <el-table-column
                         align="center"
                         prop="nameplate"

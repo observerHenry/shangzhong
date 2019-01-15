@@ -206,14 +206,11 @@
 		                        empty-text="暂无数据..."
 		                        show-overflow-tooltip="true"
 		                        style="width: 100%; " >
-					                <el-table-column
-							                width="75"
-							                align="center"
-							                label="序号" >
-					                    <template scope="scope" >
-					                        {{scope.$index+startRow}}
-					                    </template >
-					                </el-table-column >
+									<el-table-column
+											width="75"
+											align="center"
+											type="selection">
+									</el-table-column >
 
 					                <el-table-column
 							                align="center"
