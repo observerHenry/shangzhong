@@ -1,6 +1,6 @@
 <template >
     <div class="bg" >
-        <div style="text-align: center;padding-top: 200px;font-size: 36px;color: white;font-weight: bold">上海中学校车管理系统</div>
+        <div style="text-align: center;padding-top: 100px;font-size: 36px;color: white;font-weight: bold">上海中学校车管理系统</div>
         <div class="login-container" >
             <h3 class="title" >登 录</h3 >
             <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="60px" >

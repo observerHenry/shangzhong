@@ -254,9 +254,9 @@
 					                </el-table-column >
 					                <el-table-column
 							                align="center"
-							                prop="校车"
+							                prop="bus"
 							                sortable
-							                label="bus" >
+							                label="校车" >
 					                </el-table-column >
 					                <el-table-column
 							                align="center"
