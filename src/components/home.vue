@@ -307,8 +307,7 @@
 	    filters: {},
 	    created: function () {
 		    this.userinfo = JSON.parse(sessionStorage.getItem('user'));
-		    this.fetchUserRoleScope(this.userinfo.role.id);
-		    // console.log(`routes:\r\n${JSON.stringify(_this.$router.options.routes)}`)
+		    //this.fetchUserRoleScope(this.userinfo.role.id);
 	    },
 	    mounted: function () {
 //		    setInterval(function getDate() {

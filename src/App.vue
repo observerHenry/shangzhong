@@ -5,8 +5,6 @@
 </template>
 
 <script>
-    import API from './api/API'
-    const api = new API();
     export default {
         debug: true,
         name: 'app',

@@ -29,7 +29,6 @@
 	    computed: {},
 	    created: function () {
 		    this.userinfo = JSON.parse(sessionStorage.getItem('user'));
-            console.log(`routes:\r\n${JSON.stringify(_this.$router.options.routes)}`)
 	    },
 	    mounted: function () {
 

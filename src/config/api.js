@@ -1,8 +1,70 @@
 //Server root address
-var IP = "http://127.0.0.1";
-var HOST = IP + ":9090/";
+var IP = "http://127.0.0.1:8080/";
+var HOST = "http://127.0.0.1:8080/" //"http://47.101.141.182/shzx_api/";
 var DOWNLOADPATH = IP + "/oll/";
 var SOCKECT_ADDR = "ws://127.0.0.1:9998";//CRHService IP address(Windows service)
 var SYSTEMNAME = "上海中学校车管理系统";
 
 var EveryPageNum = 10;
+
+const DateRangeOptions = {
+    shortcuts: [{
+        text: '最近一周',
+        onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+        }
+    }, {
+        text: '最近一个月',
+        onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+        }
+    }, {
+        text: '最近三个月',
+        onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+        }
+    }]
+}
+const DateOptions = {
+    shortcuts: [{
+        text: '今天',
+        onClick(picker) {
+            picker.$emit('pick', new Date());
+        }
+    }, {
+        text: '昨天',
+        onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+        }
+    }, {
+        text: '一周前',
+        onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', date);
+        }
+    }]
+}
+
+const RegionList = [
+    {
+        id: "0",
+        name: '浦东校区',
+    },
+    {
+        id: "1",
+        name: '浦西校区',
+    }
+]
+
