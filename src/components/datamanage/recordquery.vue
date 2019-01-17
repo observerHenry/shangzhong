@@ -1,268 +1,304 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-    <div style="width: 100%">
-        <el-form :model="condition" label-position="right">
-            <el-row>
-                <el-col :span="12">
+<template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml" >
+    <div style="width: 100%" >
+        <el-form :model="condition" label-position="right" >
+            <el-row >
+                <el-col :span="12" >
                     <el-date-picker
-                            v-model="condition.selectDate"
-                            type="daterange"
-                            align="left"
-                            unlink-panels
-                            range-separator="—"
-                            start-placeholder="开始日期"
-                            end-placeholder="结束日期"
-                            :picker-options="pickerOptions">
-                    </el-date-picker>
-                </el-col>
-                <el-col :span="8" :offset="1">
+		                    v-model="condition.selectDate"
+		                    type="daterange"
+		                    align="left"
+		                    unlink-panels
+		                    range-separator="—"
+		                    start-placeholder="开始日期"
+		                    end-placeholder="结束日期"
+		                    :picker-options="pickerOptions" >
+                    </el-date-picker >
+                </el-col >
+                <el-col :span="8" :offset="1" >
                     <el-input :span="3" v-model="condition.keyword"
                               placeholder="请输入要查询的条件" clearable
-                              auto-complete="off"></el-input>
-                </el-col>
-                <el-col :span="2" :offset="1">
+                              auto-complete="off" ></el-input >
+                </el-col >
+                <el-col :span="2" :offset="1" >
                     <el-button
-                            icon="el-icon-search"
-                            size="normal"
-                            type="primary"
-                            @click="search">查询
-                    </el-button>
-                </el-col>
+		                    icon="el-icon-search"
+		                    size="normal"
+		                    type="primary"
+		                    @click="search" >查询
+                    </el-button >
+                </el-col >
 
-            </el-row>
-            <el-row style="margin-top: 10px;">
-                <el-col :span="4">
-                    <el-form-item label="">
-                        <el-select v-model="condition.bus" clearable placeholder="请选择校车">
+            </el-row >
+            <el-row style="margin-top: 10px;" >
+                <el-col :span="4" >
+                    <el-form-item label="" >
+                        <el-select v-model="condition.busNumber" clearable placeholder="请选择校车" >
                             <el-option
-                                    v-for="item in busList"
-                                    :value="item.id"
-                                    :label="item.number">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8" :offset="1">
-                    <el-form-item label="">
-                        <el-select v-model="condition.busStation" clearable placeholder="请选择站点">
+		                            v-for="item in busList"
+		                            :value="item.number"
+		                            :label="item.number" >
+                            </el-option >
+                        </el-select >
+                    </el-form-item >
+                </el-col >
+                <el-col :span="8" :offset="1" >
+                    <el-form-item label="" >
+                        <el-select v-model="condition.busStation" clearable placeholder="请选择站点" >
                             <el-option
-                                    v-for="item in busStationList"
-                                    :value="item.id"
-                                    :label="item.stationName">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="4" :offset="2">
-                    <el-form-item label="">
-                        <el-select v-model="condition.grade" clearable placeholder="请选择年级">
+		                            v-for="item in busStationList"
+		                            :value="item.stationName"
+		                            :label="item.stationName" >
+                            </el-option >
+                        </el-select >
+                    </el-form-item >
+                </el-col >
+                <el-col :span="4" :offset="2" >
+                    <el-form-item label="" >
+                        <el-select v-model="condition.gradeName" clearable placeholder="请选择年级" >
                             <el-option
-                                    v-for="item in gradeList"
-                                    :value="item.id"
-                                    :label="item.name">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="4" :offset="1">
-                    <el-form-item label="">
-                        <el-select v-model="condition.class" clearable placeholder="请选择班级">
+		                            v-for="item in gradeList"
+		                            :value="item.name"
+		                            :label="item.name" >
+                            </el-option >
+                        </el-select >
+                    </el-form-item >
+                </el-col >
+                <el-col :span="4" :offset="1" >
+                    <el-form-item label="" >
+                        <el-select v-model="condition.className" clearable placeholder="请选择班级" >
                             <el-option
-                                    v-for="item in classList"
-                                    :value="item.id"
-                                    :label="item.name">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        <div>为你查询到{{totalRecords}}条符合条件的记录</div>
-        <el-row>
+		                            v-for="item in classList"
+		                            :value="item.name"
+		                            :label="item.name" >
+                            </el-option >
+                        </el-select >
+                    </el-form-item >
+                </el-col >
+            </el-row >
+        </el-form >
+        <div >为你查询到<span style="font-size: 16px;font-weight: bold;color:blue">&nbsp;{{totalRecords}}&nbsp;</span>条符合条件的记录</div >
+        <el-row >
             <el-table
-                    v-loading="loadingUI"
-                    element-loading-text="获取数据中..."
-                    :data="tableData"
-                    :default-sort="{prop: 'isOldMachine', order: 'descending'}"
-                    border
-                    highlight-current-row
-                    empty-text="暂无数据..."
-                    show-overflow-tooltip="true"
-                    style="width: 100%; ">
-                <!--<el-table-column-->
-                <!--width="75"-->
-                <!--align="center"-->
-                <!--label="序号" >-->
-                <!--<template scope="scope" >-->
-                <!--{{scope.$index+startRow}}-->
-                <!--</template >-->
-                <!--</el-table-column >-->
+		            v-loading="loadingUI"
+		            element-loading-text="获取数据中..."
+		            :data="tableData"
+		            :default-sort="{prop: 'boardTime', order: 'descending'}"
+		            border
+		            highlight-current-row
+		            empty-text="暂无数据..."
+		            show-overflow-tooltip="true"
+		            style="width: 100%; " >
                 <el-table-column
-                        width="75"
-                        align="center"
-                        type="selection">
-                </el-table-column>
+		                width="75"
+		                align="center"
+		                type="selection" >
+                </el-table-column >
                 <el-table-column
-                        align="center"
-                        prop="nameplate"
-                        sortable
-                        label="时间">
-                    <template scope="scope">
-                        <div>
-                            {{scope.row.id}}
-                        </div>
-                    </template>
-                </el-table-column>
+		                align="center"
+		                prop="boardTime"
+		                sortable
+		                label="时间" >
+                    <template scope="scope" >
+                        <div >
+                            {{scope.row.boardTime}}
+                        </div >
+                    </template >
+                </el-table-column >
                 <el-table-column
-                        align="center"
-                        prop="photo"
-                        label="校车">
-                    <template scope="scope">
-                        <div>
-                            {{scope.row.photo}}
-                        </div>
-                    </template>
-                </el-table-column>
+		                align="center"
+		                prop="busNumber"
+		                label="校车" >
+                    <template scope="scope" >
+                        <div >
+                            {{scope.row.busNumber}}
+                        </div >
+                    </template >
+                </el-table-column >
                 <el-table-column label="站点"
                                  align="center"
                                  sortable
-                                 prop="name">
-                    <template scope="scope">
-                        <div>
-                            {{scope.row.name}}
-                        </div>
-                    </template>
-                </el-table-column>
+                                 prop="stationName" >
+                    <template scope="scope" >
+                        <div >
+                            {{scope.row.stationName}}
+                        </div >
+                    </template >
+                </el-table-column >
                 <el-table-column
-                        align="center"
-                        prop="class"
-                        sortable
-                        label="班级">
-                </el-table-column>
+		                align="center"
+		                prop="className"
+		                sortable
+		                label="班级" >
+                </el-table-column >
                 <el-table-column
-                        align="center"
-                        prop="bus"
-                        sortable
-                        label="姓名">
-                </el-table-column>
+		                align="center"
+		                prop="studentName"
+		                sortable
+		                label="姓名" >
+                </el-table-column >
                 <el-table-column
-                        align="center"
-                        sortable
-                        label="状态">
-                    <template scope="scope">
-                        <div>
-                            {{scope.row.name}}
-                        </div>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <div class="block" style="text-align: center; margin-top: 20px">
+		                align="center"
+		                prop="modeName"
+		                sortable
+		                label="状态" >
+                    <template scope="scope" >
+                        <div >
+                            {{scope.row.modeName}}
+                        </div >
+                    </template >
+                </el-table-column >
+            </el-table >
+            <div class="block" style="text-align: center; margin-top: 20px" >
                 <el-pagination
-                        background
-                        @current-change="handleCurrentChange"
-                        :current-page="currentPage"
-                        :page-size="pageSize"
-                        layout="total, prev, pager, next, jumper"
-                        :total="totalRecords">
-                </el-pagination>
-            </div>
-        </el-row>
-    </div>
-</template>
+		                background
+		                @current-change="handleCurrentChange"
+		                :current-page="currentPage"
+		                :page-size="pageSize"
+		                layout="total, prev, pager, next, jumper"
+		                :total="totalRecords" >
+                </el-pagination >
+            </div >
+        </el-row >
+    </div >
+</template >
 
-<script>
+<script >
     var _this;
     import {getServerBusList, getServerBusStationList} from '../../api/commonRequest'
-
+    import request from '../../api/request'
     export default {
-        name: "RecordQuery",
-        components: {},
-        data() {
-            _this = this;
-            return {
-                condition: {
-                    selectDate: new Date(),
-                },
-                pageSize: EveryPageNum,//每一页的num
-                currentPage: 1,
-                startRow: 0,
-                totalRecords: 0,
-                tableData: [],
-                loadingUI: false,
-                pickerOptions: DateRangeOptions,
+	    name: "RecordQuery",
+	    components: {},
+	    data() {
+		    _this = this;
+		    return {
+			    condition: {
+				    selectDate: new Date(),
+				    busNumber: '',
+				    busStation: '',
+				    gradeName: '',
+				    className: '',
+			    },
+			    pageSize: EveryPageNum,//每一页的num
+			    currentPage: 1,
+			    startRow: 0,
+			    totalRecords: 0,
+			    tableData: [],
+			    multipleSelection: [],
+			    loadingUI: false,
+			    pickerOptions: DateRangeOptions,
 
-                busList: [],
-                busStationList: [],
-                gradeList: [],
-                classList: []
+			    busList: [],
+			    busStationList: [],
+			    gradeList: [],
+			    classList: []
 
-            }
-        },
-        methods: {
-            search() {
-                let condition = {}
-                if (_this.condition.selectDate != null && _this.condition.selectDate.length > 0) {
-                    condition.query_start_time_maintain = this.condition.selectDate[0].format("yyyy-MM-dd");
-                    condition.query_finish_time_maintain = this.condition.selectDate[1].format("yyyy-MM-dd");
-                }
-            },
-            handleCurrentChange(val) {
-                this.currentPage = val;
-                this.search();
-            },
+		    }
+	    },
+	    methods: {
+		    search() {
+			    _this.loadingUI = true;
+			    let condition = {
+				    busNumber: _this.condition.busNumber,
+				    busStation: _this.condition.busStation,
+				    gradeName: _this.condition.gradeName,
+				    className: _this.condition.className,
+				    page: _this.currentPage,
+				    size: _this.pageSize,
+			    }
+			    if (_this.condition.selectDate != null && _this.condition.selectDate.length > 0) {
+				    condition.queryStartTime = this.condition.selectDate[0].format("yyyy-MM-dd");
+				    condition.queryFinishTime = this.condition.selectDate[1].format("yyyy-MM-dd");
+			    }
+			    let params = new URLSearchParams();
+			    if (condition) {
+				    let keys = Object.keys(condition);
+				    for (let key of keys) {
+					    params.append(key, condition[key]);
+				    }
+			    }
+			    request({
+				    url: `${HOST}picked/students/info/selectStudentBus`,
+				    method: 'post',
+				    data: params
+			    }).then(res => {
+				    if (res.data.code == 200) {
+					    _this.tableData = res.data.data.list;
+					    _this.totalRecords = res.data.data.total;
+					    _this.startRow = res.data.data.startRow;
+				    }
+				    else {
+					    //showMessage(_this,"获取数据失败！");
+				    }
+				    _this.multipleSelection = [];
+				    _this.loadingUI = false;
 
-            getBusList() {
-                getServerBusList({}).then(res => {
-                    if (res.data.code == 200) {
-                        _this.busList = res.data.data.list;
-                    }
-                    else {
-                        //showMessage(_this,"获取数据失败！");
-                    }
-                }).catch((error => {
-                    //showMessage(_this,error);
-                }))
-            },
 
-            getBusStationList() {
-                getServerBusStationList({}).then(res => {
-                    if (res.data.code == 200) {
-                        _this.busStationList = res.data.data.list;
-                    }
-                    else {
-                        //showMessage(_this,"获取数据失败！");
-                    }
-                }).catch((error => {
-                    //showMessage(_this,error);
-                }))
-            }
-        },
-        computed: {},
+			    }).catch(error => {
+				    console.log(error)
+				    _this.loadingUI = false;
 
-        filters: {},
+			    })
 
-        created: function () {
-            _this.getBusList();
-            _this.getBusStationList();
-            _this.gradeList = getGradeList();
-            _this.classList = getClassList();
-            console.log(JSON.stringify(_this.gradeList))
+		    },
+		    handleCurrentChange(val) {
+			    this.currentPage = val;
+			    this.search();
+		    },
 
-        },
-        mounted: function () {
-            _this.search();
-        }
+		    getBusList() {
+			    getServerBusList({}).then(res => {
+				    if (res.data.code == 200) {
+					    _this.busList = res.data.data.list;
+				    }
+				    else {
+					    //showMessage(_this,"获取数据失败！");
+				    }
+			    }).catch((error => {
+				    //showMessage(_this,error);
+			    }))
+		    },
+
+		    getBusStationList() {
+			    getServerBusStationList({}).then(res => {
+				    if (res.data.code == 200) {
+					    _this.busStationList = res.data.data.list;
+				    }
+				    else {
+					    //showMessage(_this,"获取数据失败！");
+				    }
+			    }).catch((error => {
+				    //showMessage(_this,error);
+			    }))
+		    }
+	    },
+	    computed: {},
+
+	    filters: {},
+
+	    created: function () {
+		    _this.getBusList();
+		    _this.getBusStationList();
+		    _this.gradeList = getGradeList();
+		    _this.classList = getClassList();
+		    console.log(JSON.stringify(_this.gradeList))
+
+	    },
+	    mounted: function () {
+		    _this.search();
+	    }
     }
-</script>
-<style>
+</script >
+<style >
     .el-select {
-        width: 100%;
+	    width: 100%;
     }
 
     .el-button {
-        color: white;
+	    color: white;
     }
 
     .speacial-button {
-        color: #bfcbd9;
+	    color: #bfcbd9;
     }
-</style>
+</style >

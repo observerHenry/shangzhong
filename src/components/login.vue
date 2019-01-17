@@ -105,7 +105,7 @@
                             _this.$router.push("/home");
                         }
                         else {
-                            _this.errorMsg = res.message;// '请输入正确的用户名和密码！'
+                            _this.errorMsg = res.data.message;// '请输入正确的用户名和密码！'
                         }
                     }).catch((error => {
                         _this.errorMsg = error;

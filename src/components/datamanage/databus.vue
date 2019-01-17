@@ -7,10 +7,10 @@
                     placeholder="选择日期">
             </el-date-picker>
         </el-row>
-        <el-row style="margin-top: 10px;">
+        <el-row style="margin-top: 10px;text-align: center">
             <el-col :span="8">
-                <table style="width: 350px;height: 420px;">
-                    <tr style="text-align: left">
+                <table style="width: 350px;height: 420px;" >
+                    <tr style="text-align: center">
                         <td colspan="3">
 					     <span class="span-normal">
 					        早班统计
