@@ -15,7 +15,7 @@
                     </el-date-picker >
                 </el-col >
                 <el-col :span="8" :offset="1" >
-                    <el-input :span="3" v-model="condition.keyword"
+                    <el-input :span="3" v-model="condition.keyWord"
                               placeholder="请输入要查询的条件" clearable
                               auto-complete="off" ></el-input >
                 </el-col >
@@ -76,7 +76,7 @@
                 </el-col >
             </el-row >
         </el-form >
-        <div >为你查询到<span style="font-size: 16px;font-weight: bold;color:blue">&nbsp;{{totalRecords}}&nbsp;</span>条符合条件的记录</div >
+        <div >为你查询到<span style="font-size: 16px;font-weight: bold;color:blue" >&nbsp;{{totalRecords}}&nbsp;</span >条符合条件的记录</div >
         <el-row >
             <el-table
 		            v-loading="loadingUI"
@@ -173,11 +173,12 @@
 		    _this = this;
 		    return {
 			    condition: {
-				    selectDate: new Date(),
+				    selectDate: '',
 				    busNumber: '',
 				    busStation: '',
 				    gradeName: '',
 				    className: '',
+				    keyWord: '',
 			    },
 			    pageSize: EveryPageNum,//每一页的num
 			    currentPage: 1,
@@ -199,6 +200,7 @@
 		    search() {
 			    _this.loadingUI = true;
 			    let condition = {
+				    "keyWord": _this.condition.keyWord,
 				    busNumber: _this.condition.busNumber,
 				    busStation: _this.condition.busStation,
 				    gradeName: _this.condition.gradeName,
@@ -207,8 +209,8 @@
 				    size: _this.pageSize,
 			    }
 			    if (_this.condition.selectDate != null && _this.condition.selectDate.length > 0) {
-				    condition.queryStartTime = this.condition.selectDate[0].format("yyyy-MM-dd");
-				    condition.queryFinishTime = this.condition.selectDate[1].format("yyyy-MM-dd");
+				    condition.queryStartTime = _this.condition.selectDate[0].format("yyyy-MM-dd");
+				    condition.queryFinishTime = _this.condition.selectDate[1].format("yyyy-MM-dd");
 			    }
 			    let params = new URLSearchParams();
 			    if (condition) {

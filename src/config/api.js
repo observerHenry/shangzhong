@@ -60,11 +60,11 @@ const DateOptions = {
 const RegionList = [
     {
         id: "0",
-        name: '浦东校区',
+        name: '浦东',
     },
     {
         id: "1",
-        name: '浦西校区',
+        name: '浦西',
     }
 ]
 

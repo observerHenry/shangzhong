@@ -74,7 +74,7 @@
 		                        :default-active="regionData.selectId" @select="handleSelect" >
                             <el-menu-item v-for="item in regionData.subList" :index="item.id"
                                           style="text-align: left;font-size: 14px; font-weight: bold" >
-                                {{item.name}}
+                                {{item.name}}校区
                             </el-menu-item >
                         </el-menu >
                     </td >
@@ -103,32 +103,32 @@
                             </el-table-column >
                             <el-table-column
 		                            align="center"
-		                            prop="schoolPartition"
+		                            prop="busRangeName"
 		                            sortable
 		                            label="早/午区间" >
                                 <template scope="scope" >
                                     <div >
-                                        {{scope.row.schoolPartition}}
+                                        {{scope.row.busRangeName}}
                                     </div >
                                 </template >
                             </el-table-column >
                             <el-table-column
 		                            align="center"
-		                            prop="busSupplier"
+		                            prop="busSupplierName"
 		                            label="供应商" >
                                 <template scope="scope" >
                                     <div >
-                                        {{scope.row.busSupplier}}
+                                        {{scope.row.busSupplierName}}
                                     </div >
                                 </template >
                             </el-table-column >
                             <el-table-column label="BusMom"
                                              align="center"
                                              sortable
-                                             prop="busMom" >
+                                             prop="busMomName" >
                                 <template scope="scope" >
                                     <div >
-                                        {{scope.row.busMom}}
+                                        {{scope.row.busMomName}}
                                     </div >
                                 </template >
                             </el-table-column >
@@ -260,7 +260,10 @@
 			    _this.loadingUI = true;
 			    let params = new URLSearchParams();
 			    let condition = {
-				    "key": _this.queryKey,
+				    "keyWord": _this.queryKey,
+				    page: _this.currentPage,
+				    size: _this.pageSize,
+				    schoolPartition: _this.regionData.selectName,
 			    }
 			    if (condition) {
 				    let keys = Object.keys(condition);
@@ -269,7 +272,7 @@
 				    }
 			    }
 			    request({
-				    url: `${HOST}bus/base/info/list`,
+				    url: `${HOST}bus/base/info/getBusBaseInfo`,
 				    method: 'post',
 				    data: params
 			    }).then(res => {
