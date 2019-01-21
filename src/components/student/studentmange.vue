@@ -1,9 +1,11 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div style="width: 100%;height: 100%;padding: 24px">
         <el-row>
-            <el-col :span="2" style="margin-top: 10px">
-                <h4>学生列表</h4>
-            </el-col>
+            <el-col :span="2">
+                <div style="margin: 10px;">
+                    <span style="font-weight: 600;color:#5D5D5D;font-size: 15px">学生列表</span >
+                </div>
+            </el-col >
             <el-col :offset="16" :span="2">
                 <el-button
                         icon="el-icon-download"
@@ -23,8 +25,8 @@
                 </el-button>
             </el-col>
         </el-row>
-        <el-row style="margin-top: 20px;background: white" class="well">
-            <el-col :span="4" class="well" style="background: white">
+        <el-row style="margin-top: 20px;background: white;min-height: 800px" class="well">
+            <el-col :span="3" class="well" style="background: white;min-height: 750px;overflow-y: auto">
                 <div style="text-align: center">
                     <el-button
                             icon="el-icon-plus"
@@ -40,10 +42,10 @@
                              @node-click="handleNodeClick"></el-tree>
                 </div>
             </el-col>
-            <el-col :span="19" style="background: white;margin-left: 30px;text-align: center">
+            <el-col :span="20" style="background: white;margin-left: 30px;text-align: center">
                 <el-row>
                     <el-col :span="2">
-                        <el-button type="danger" icon="el-icon-delete" circle></el-button>
+                        <el-button type="danger" icon="el-icon-delete"></el-button>
                     </el-col>
                     <el-col :span="8" :offset="10">
                         <el-input v-model="searchContent" placeholder="请输入关键词"></el-input>

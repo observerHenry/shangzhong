@@ -76,89 +76,91 @@
                 </el-col >
             </el-row >
         </el-form >
-        <div >为你查询到<span style="font-size: 16px;font-weight: bold;color:blue" >&nbsp;{{totalRecords}}&nbsp;</span >条符合条件的记录</div >
-        <el-row >
-            <el-table
-		            v-loading="loadingUI"
-		            element-loading-text="获取数据中..."
-		            :data="tableData"
-		            :default-sort="{prop: 'boardTime', order: 'descending'}"
-		            border
-		            highlight-current-row
-		            empty-text="暂无数据..."
-		            show-overflow-tooltip="true"
-		            style="width: 100%; " >
-                <el-table-column
-		                width="75"
-		                align="center"
-		                type="selection" >
-                </el-table-column >
-                <el-table-column
-		                align="center"
-		                prop="boardTime"
-		                sortable
-		                label="时间" >
-                    <template scope="scope" >
-                        <div >
-                            {{scope.row.boardTime}}
-                        </div >
-                    </template >
-                </el-table-column >
-                <el-table-column
-		                align="center"
-		                prop="busNumber"
-		                label="校车" >
-                    <template scope="scope" >
-                        <div >
-                            {{scope.row.busNumber}}
-                        </div >
-                    </template >
-                </el-table-column >
-                <el-table-column label="站点"
-                                 align="center"
-                                 sortable
-                                 prop="stationName" >
-                    <template scope="scope" >
-                        <div >
-                            {{scope.row.stationName}}
-                        </div >
-                    </template >
-                </el-table-column >
-                <el-table-column
-		                align="center"
-		                prop="className"
-		                sortable
-		                label="班级" >
-                </el-table-column >
-                <el-table-column
-		                align="center"
-		                prop="studentName"
-		                sortable
-		                label="姓名" >
-                </el-table-column >
-                <el-table-column
-		                align="center"
-		                prop="modeName"
-		                sortable
-		                label="状态" >
-                    <template scope="scope" >
-                        <div >
-                            {{scope.row.modeName}}
-                        </div >
-                    </template >
-                </el-table-column >
-            </el-table >
-            <div class="block" style="text-align: center; margin-top: 20px" >
-                <el-pagination
-		                background
-		                @current-change="handleCurrentChange"
-		                :current-page="currentPage"
-		                :page-size="pageSize"
-		                layout="total, prev, pager, next, jumper"
-		                :total="totalRecords" >
-                </el-pagination >
-            </div >
-        </el-row >
+        <div class="well" style="border-radius: 5px;background-color: white;border-color: whitesmoke">
+            <div style="color: #909399;font-weight: bold;margin-bottom: 20px">为您查询到<span style="font-size: 16px;font-weight: bold;color:#1875F0" >&nbsp;{{totalRecords}}&nbsp;</span >条符合条件的记录</div >
+            <el-row >
+                <el-table
+                        v-loading="loadingUI"
+                        element-loading-text="获取数据中..."
+                        :data="tableData"
+                        :default-sort="{prop: 'boardTime', order: 'descending'}"
+                        border
+                        highlight-current-row
+                        empty-text="暂无数据..."
+                        show-overflow-tooltip="true"
+                        style="width: 100%; " >
+                    <el-table-column
+                            width="75"
+                            align="center"
+                            type="selection" >
+                    </el-table-column >
+                    <el-table-column
+                            align="center"
+                            prop="boardTime"
+                            sortable
+                            label="时间" >
+                        <template scope="scope" >
+                            <div >
+                                {{scope.row.boardTime}}
+                            </div >
+                        </template >
+                    </el-table-column >
+                    <el-table-column
+                            align="center"
+                            prop="busNumber"
+                            label="校车" >
+                        <template scope="scope" >
+                            <div >
+                                {{scope.row.busNumber}}
+                            </div >
+                        </template >
+                    </el-table-column >
+                    <el-table-column label="站点"
+                                     align="center"
+                                     sortable
+                                     prop="stationName" >
+                        <template scope="scope" >
+                            <div >
+                                {{scope.row.stationName}}
+                            </div >
+                        </template >
+                    </el-table-column >
+                    <el-table-column
+                            align="center"
+                            prop="className"
+                            sortable
+                            label="班级" >
+                    </el-table-column >
+                    <el-table-column
+                            align="center"
+                            prop="studentName"
+                            sortable
+                            label="姓名" >
+                    </el-table-column >
+                    <el-table-column
+                            align="center"
+                            prop="modeName"
+                            sortable
+                            label="状态" >
+                        <template scope="scope" >
+                            <div >
+                                {{scope.row.modeName}}
+                            </div >
+                        </template >
+                    </el-table-column >
+                </el-table >
+                <div class="block" style="text-align: center; margin-top: 20px" >
+                    <el-pagination
+                            background
+                            @current-change="handleCurrentChange"
+                            :current-page="currentPage"
+                            :page-size="pageSize"
+                            layout="total, prev, pager, next, jumper"
+                            :total="totalRecords" >
+                    </el-pagination >
+                </div >
+            </el-row >
+        </div>
     </div >
 </template >
 

@@ -344,5 +344,15 @@
         text-align: center;
     }
 
+    .el-tree-node__expand-icon {
+      font-size: 18px;
+    }
+
+    .el-tree-node__expand-icon.expanded {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+        color: #1875F0;
+    }
+
 
 </style>

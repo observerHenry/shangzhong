@@ -11,6 +11,7 @@ import DataBus from "../components/datamanage/databus.vue"
 import SchoolBus from "../components/schoolbus.vue"
 import BusManage from "../components/schoolbus/busmanage.vue"
 import NightWay from "../components/schoolbus/nightway.vue"
+import LineManage from "../components/schoolbus/nightway.vue"
 import SiteLib from "../components/schoolbus/sitelib.vue"
 
 import Student from "../components/student.vue"
@@ -99,6 +100,12 @@ export default
 						name: 'NightWay',
 						meta: '晚班线路'
 					},
+                    {
+                        path: '/home/schoolbus/linemamage',
+                        component: LineManage,
+                        name: 'LineManage',
+                        meta: '线路管理'
+                    },
 				],
 			},
 			{

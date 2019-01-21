@@ -36,7 +36,7 @@
 	    methods: {
 		    handleSelect(key, keyPath) {
 			    _this.activeName = key;
-			    //_this.$router.push(key)
+			    _this.$router.push(key)
 		    },
 		    getIndex(item, list)
 		    {

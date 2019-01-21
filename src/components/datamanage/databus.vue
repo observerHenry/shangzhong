@@ -1,5 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-    <div style="width: 100%;height: 100%;padding: 24px">
+    <div style="width: 100%;height: 100%;padding: 24px;overflow-y: auto">
         <el-row>
             <el-date-picker
                     v-model="selectData"
@@ -177,101 +177,101 @@
                 </div>
             </el-col>
         </el-row>
-        <el-row>
-            <table style="margin-top: 10px;width: 100%;height: 100%;">
-                <tr style="height: 90px;">
-                    <td style="width: 220px;">
-                        <span style="font-size: 18px; color: #bfcbd9">缺乘名单</span>
-                    </td>
-                    <td>
+        <el-row style="width: 100%;background-color: white;border-color: whitesmoke" class="well">
+            <el-col :span="3" class="well" style="background: white;min-height: 360px;overflow-y: auto">
+                <div style="width: 100%;height:72px; text-align: center;padding-top: 20px">
+                    <span style="font-size:18px;font-weight:bolder;color:rgba(153,153,153,1)">缺乘名单</span>
+                </div>
+                <div style="width: 100%;height: 2px;background-color: whitesmoke"></div>
+                <div style="width: 100%;">
+                    <el-tree
+                            :data="treeData"
+                            :props="defaultProps"
+                            default-expand-all
+                            style="text-align: center"
+                            @node-click="handleNodeClick"
+                            highlight-current>
+                    </el-tree>
+                </div>
+            </el-col>
+            <el-col :span="21">
+                <div style="vertical-align: text-top;padding: 5px;text-align: center">
+                    <el-table
+                            v-loading="loadingUI"
+                            element-loading-text="获取数据中..."
+                            :data="tableData"
+                            border
+                            highlight-current-row
+                            empty-text="暂无数据..."
+                            show-overflow-tooltip="true"
+                            style="width: 100%; margin-top: 10px">
+                        <el-table-column
+                                width="75"
+                                label="序号"
+                                align="center">
+                            <template scope="scope">
+                                {{scope.$index+startRow}}
+                            </template>
+                        </el-table-column>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 220px;">
-                        <el-tree
-                                :data="treeData"
-                                :props="defaultProps"
-                                default-expand-all
-                                @node-click="handleNodeClick"
-                                highlight-current
-                        >
-                        </el-tree>
-                    </td>
-                    <td style="vertical-align: text-top;padding: 10px;">
-                        <el-table
-                                v-loading="loadingUI"
-                                element-loading-text="获取数据中..."
-                                :data="tableData"
-                                :default-sort="{prop: 'isOldMachine', order: 'descending'}"
-                                border
-                                highlight-current-row
-                                empty-text="暂无数据..."
-                                show-overflow-tooltip="true"
-                                style="width: 100%; ">
-                            <el-table-column
-                                    width="75"
-                                    align="center"
-                                    type="selection">
-                            </el-table-column>
-
-                            <el-table-column
-                                    align="center"
-                                    prop="nameplate"
-                                    sortable
-                                    label="学号">
-                                <template scope="scope">
-                                    <div>
-                                        {{scope.row.id}}
-                                    </div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    align="center"
-                                    prop="photo"
-                                    label="头像">
-                                <template scope="scope">
-                                    <div>
-                                        {{scope.row.photo}}
-                                    </div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="姓名"
-                                             align="center"
-                                             sortable
-                                             prop="name">
-                                <template scope="scope">
-                                    <div>
-                                        {{scope.row.name}}
-                                    </div>
-                                </template>
-                            </el-table-column>
-                            <el-table-column
-                                    align="center"
-                                    prop="class"
-                                    sortable
-                                    label="班级">
-                            </el-table-column>
-                            <el-table-column
-                                    align="center"
-                                    prop="bus"
-                                    sortable
-                                    label="校车">
-                            </el-table-column>
-                            <el-table-column
-                                    align="center"
-                                    sortable
-                                    label="站点">
-                                <template scope="scope">
-                                    <div>
-                                        {{scope.row.name}}
-                                    </div>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </td>
-                </tr>
-            </table>
+                        <el-table-column
+                                align="center"
+                                prop="studentNumber"
+                                sortable
+                                label="学号">
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="headImg"
+                                label="头像">
+                            <template scope="scope">
+                                <img style=" height: 60px;width:60px; border: solid 2px lightskyblue; border-radius: 50%;align-items: center;justify-content: center;
+                                    overflow: hidden;" :src="scope.row.photo"/>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="姓名"
+                                         align="center"
+                                         sortable
+                                         prop="name">
+                            <template scope="scope">
+                                <div>
+                                    {{scope.row.name}}
+                                </div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="banjiName"
+                                label="班级">
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                prop="busNumber"
+                                label="校车">
+                        </el-table-column>
+                        <el-table-column
+                                align="center"
+                                width="200"
+                                label="站点">
+                            <template scope="scope">
+                                <div>
+                                    {{scope.row.boardStationAfternoonName}}
+                                </div>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <el-pagination
+                            style="margin-top: 20px"
+                            background
+                            @size-change="handleSizeChange"
+                            @current-change="handleCurrentChange"
+                            :current-page.sync="currentPage3"
+                            :page-size="8"
+                            layout="prev, pager, next, jumper"
+                            :total="88">
+                    </el-pagination>
+                </div>
+            </el-col>
 
         </el-row>
 
@@ -352,8 +352,29 @@
         watch: {},
         methods: {
             handleNodeClick(data) {
-                console.log(data);
-            }
+                //只监听班级的点击
+                if(!isUndefined(data.id)) {
+                    let params = new URLSearchParams();
+                    params.append("className",data.label);
+                    request({
+                        url: '/student/getStudents',
+                        method: 'post',
+                        data: params
+                    }).then(res => {
+                        if (res.data.code == 200) {
+                            _this.tableData = res.data.data.list;
+                        } else {
+                            showMessage(_this,"获取数据失败！");
+                        }
+                        _this.loadingUI = false;
+
+                    }).catch(error => {
+                        console.log(error)
+                        _this.loadingUI = false;
+
+                    })
+                }
+            },
         },
         computed: {},
 
