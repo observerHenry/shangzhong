@@ -1,5 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-    <div style="width:100%;height: 100%; ">
+    <div style="width:100%;height: 100%; padding: 24px">
         <el-col class="well well-lg" style="background-color: white;">
             <div align="right" style="margin-bottom: 20px">
                 <el-button

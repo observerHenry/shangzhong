@@ -44,10 +44,11 @@ export default
 		redirect: '/home/datamanage/databus',
 		children: [
 			{
-				path: 'home/datamanage',
+				path: '/home/datamanage',
 				component: DataManage,
 				name: 'DataManage',
 				icon: 'el-icon-menu',
+                hidden: false,
 				redirect: '/home/datamanage/databus',
 				meta: "数据管理",
 				children: [
@@ -72,7 +73,7 @@ export default
 				],
 			},
 			{
-				path: 'home/schoolbus',
+				path: '/home/schoolbus',
 				component: SchoolBus,
 				name: 'SchoolBus',
 				meta: "校车管理",
@@ -107,6 +108,7 @@ export default
 				icon: 'el-icon-news',
 				redirect: '/home/student/studentmange',
 				meta: "学生管理",
+                hidden: false,
 				children: [
 					{
 						path: '/home/student/studentmange',

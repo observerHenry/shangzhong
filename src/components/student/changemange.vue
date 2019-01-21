@@ -1,5 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-    <div style="margin: 50px">
+    <div style="width: 100%;height: 100%;padding: 24px">
         <el-row>
             <el-col :span="2" style="margin-top: 10px">
                 <h4>变更列表</h4 >

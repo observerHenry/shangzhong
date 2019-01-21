@@ -46,7 +46,7 @@
         data() {
             _this = this;
             return {
-                submitUrl: HOST + "user/requestLogin", //,
+                submitUrl: "/user/requestLogin", //,
                 ruleForm2: {
                     account: '',
                     name: "",

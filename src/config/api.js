@@ -1,5 +1,6 @@
 //Server root address
 var IP = "http://127.0.0.1:8080/";
+//var HOST = "http://127.0.0.1:8080/" //"http://47.101.141.182/shzx_api/";
 var HOST = "http://127.0.0.1:8080/" //"http://47.101.141.182/shzx_api/";
 var DOWNLOADPATH = IP + "/oll/";
 var SOCKECT_ADDR = "ws://127.0.0.1:9998";//CRHService IP address(Windows service)

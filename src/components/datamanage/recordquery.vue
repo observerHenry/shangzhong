@@ -1,8 +1,8 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml" >
-    <div style="width: 100%" >
+    <div style="width: 100%;height: 100%;padding: 24px" >
         <el-form :model="condition" label-position="right" >
             <el-row >
-                <el-col :span="12" >
+                <el-col :span="4" >
                     <el-date-picker
 		                    v-model="condition.selectDate"
 		                    type="daterange"
@@ -14,7 +14,7 @@
 		                    :picker-options="pickerOptions" >
                     </el-date-picker >
                 </el-col >
-                <el-col :span="8" :offset="1" >
+                <el-col :span="4" :offset="1" >
                     <el-input :span="3" v-model="condition.keyWord"
                               placeholder="请输入要查询的条件" clearable
                               auto-complete="off" ></el-input >
@@ -41,7 +41,7 @@
                         </el-select >
                     </el-form-item >
                 </el-col >
-                <el-col :span="8" :offset="1" >
+                <el-col :span="4" :offset="1" >
                     <el-form-item label="" >
                         <el-select v-model="condition.busStation" clearable placeholder="请选择站点" >
                             <el-option
@@ -52,7 +52,7 @@
                         </el-select >
                     </el-form-item >
                 </el-col >
-                <el-col :span="4" :offset="2" >
+                <el-col :span="4" :offset="1" >
                     <el-form-item label="" >
                         <el-select v-model="condition.gradeName" clearable placeholder="请选择年级" >
                             <el-option

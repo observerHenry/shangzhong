@@ -1,5 +1,5 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-    <div style="width: 100%;height: 100%">
+    <div style="width: 100%;height: 100%;padding: 24px">
         <el-row>
             <el-date-picker
                     v-model="selectData"
@@ -9,26 +9,26 @@
         </el-row>
         <el-row style="margin-top: 10px;text-align: center">
             <el-col :span="8">
-                <table style="width: 350px;height: 420px;" >
-                    <tr style="text-align: center">
-                        <td colspan="3">
+                <div  class="well" style="width: 350px;height: 420px; border-radius: 5px;background-color: white;border-color: whitesmoke" >
+                    <div style="text-align: left;font-weight: bold">
 					     <span class="span-normal">
 					        早班统计
 				         </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <div>
-                                <el-progress type="circle" :percentage="50"></el-progress>
-                            </div>
-                            <span class="span-normal">
-						        早班乘坐统计
-					         </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                    </div>
+                    <div style="height: 1px;background-color: whitesmoke;margin-top: 16px"></div>
+                    <div style="margin-top: 50px;text-align: center">
+                        <el-progress type="circle" :percentage="92.5" status="text">
+                            <span style="font-size: 30px;color: #409EFF">921</span>
+                        </el-progress>
+                    </div>
+                    <div style="text-align: center;margin-top: 30px">
+                         <span class="span-normal" style="font-weight: bold;color: lightgray">
+                            早班乘坐统计
+                         </span>
+                    </div>
+                    <div style="height: 1px;background-color: whitesmoke;margin-top: 30px"></div>
+                    <el-row style="margin-top: 24px">
+                        <el-col :span="8">
                             <div>
 							     <span class="span_number">
 								     1021
@@ -38,8 +38,8 @@
 								     应乘人数
 							     </span>
                             </div>
-                        </td>
-                        <td>
+                        </el-col>
+                        <el-col :span="8">
                             <div>
 							     <span class="span_number">
 								     100
@@ -49,98 +49,42 @@
 								     缺乘人数
 							     </span>
                             </div>
-                        </td>
-                        <td>
+                        </el-col>
+                        <el-col :span="8">
                             <div>
 							     <span class="span_number">
-								     92%
+								     92.5%
 							     </span>
                                 <br>
                                 <span class="span-normal">
 								     乘车率
 							     </span>
                             </div>
-                        </td>
-                    </tr>
-                </table>
+                        </el-col>
+                    </el-row>
+                </div>
             </el-col>
             <el-col :span="8">
-                <table style="width: 350px;height: 420px;">
-                    <tr style="text-align: left">
-                        <td colspan="3">
+                <div  class="well" style="width: 350px;height: 420px; border-radius: 5px;background-color: white;border-color: whitesmoke" >
+                    <div style="text-align: left;font-weight: bold">
 					     <span class="span-normal">
 					        午班统计
 				         </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <div>
-                                <el-progress type="circle" :percentage="80"></el-progress>
-                            </div>
-                            <span class="span-normal">
-						        午班乘坐统计
-					         </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div>
-							     <span class="span_number">
-								     998
-							     </span>
-                                <br>
-                                <span class="span-normal">
-								     应乘人数
-							     </span>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-							     <span class="span_number">
-								     50
-							     </span>
-                                <br>
-                                <span class="span-normal">
-								     缺乘人数
-							     </span>
-                            </div>
-                        </td>
-                        <td>
-                            <div>
-							     <span class="span_number">
-								     92%
-							     </span>
-                                <br>
-                                <span class="span-normal">
-								     乘车率
-							     </span>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </el-col>
-            <el-col :span="8">
-                <table style="width: 350px;height: 420px;">
-                    <tr style="text-align: left">
-                        <td colspan="3">
-					     <span class="span-normal">
-					        晚班统计
-				         </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <div>
-                                <el-progress type="circle" :percentage="60"></el-progress>
-                            </div>
-                            <span class="span-normal">
-						        晚班乘坐统计
-					         </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                    </div>
+                    <div style="height: 1px;background-color: whitesmoke;margin-top: 16px"></div>
+                    <div style="margin-top: 50px;text-align: center">
+                        <el-progress type="circle" :percentage="88" color="#50D166" status="text">
+                            <span style="font-size: 30px;color: #50D166;">899</span>
+                        </el-progress>
+                    </div>
+                    <div style="text-align: center;margin-top: 30px">
+                         <span class="span-normal" style="font-weight: bold">
+                            午班乘坐统计
+                         </span>
+                    </div>
+                    <div style="height: 1px;background-color: whitesmoke;margin-top: 30px"></div>
+                    <el-row style="margin-top: 24px">
+                        <el-col :span="8">
                             <div>
 							     <span class="span_number">
 								     1021
@@ -150,8 +94,8 @@
 								     应乘人数
 							     </span>
                             </div>
-                        </td>
-                        <td>
+                        </el-col>
+                        <el-col :span="8">
                             <div>
 							     <span class="span_number">
 								     100
@@ -161,20 +105,76 @@
 								     缺乘人数
 							     </span>
                             </div>
-                        </td>
-                        <td>
+                        </el-col>
+                        <el-col :span="8">
                             <div>
 							     <span class="span_number">
-								     92%
+								     88%
 							     </span>
                                 <br>
                                 <span class="span-normal">
 								     乘车率
 							     </span>
                             </div>
-                        </td>
-                    </tr>
-                </table>
+                        </el-col>
+                    </el-row>
+                </div>
+            </el-col>
+            <el-col :span="8">
+                <div  class="well" style="width: 350px;height: 420px; border-radius: 5px;background-color: white;border-color: whitesmoke" >
+                    <div style="text-align: left;font-weight: bold">
+					     <span class="span-normal">
+					        晚班统计
+				         </span>
+                    </div>
+                    <div style="height: 1px;background-color: whitesmoke;margin-top: 16px"></div>
+                    <div style="margin-top: 50px;text-align: center">
+                        <el-progress type="circle" :percentage="0" status="text">
+                            <span style="font-size: 36px;color: #5553CE">60</span>
+                        </el-progress>
+                    </div>
+                    <div style="text-align: center;margin-top: 30px">
+                         <span class="span-normal" style="font-weight: bold">
+                            晚班乘坐统计
+                         </span>
+                    </div>
+                    <div style="height: 1px;background-color: whitesmoke;margin-top: 30px"></div>
+                    <el-row style="margin-top: 24px">
+                        <el-col :span="8">
+                            <div>
+							     <span class="span_number">
+								     /
+							     </span>
+                                <br>
+                                <span class="span-normal">
+								     应乘人数
+							     </span>
+                            </div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div>
+							     <span class="span_number">
+								     /
+							     </span>
+                                <br>
+                                <span class="span-normal">
+								     缺乘人数
+							     </span>
+                            </div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div>
+							     <span class="span_number">
+								     /
+							     </span>
+                                <br>
+                                <span class="span-normal">
+								     乘车率
+							     </span>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
             </el-col>
         </el-row>
         <el-row>
@@ -378,12 +378,14 @@
     }
 
     .span-normal {
-        color: #666666;
-        font-size: 14px;
+        color: #B3B3B3;
+        font-size: 13px;
+        color: lightgray;
     }
 
     .span_number {
         color: #666666;
+        font-weight: bold;
         font-size: 16px;
     }
 </style>
