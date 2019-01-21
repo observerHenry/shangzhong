@@ -82,7 +82,7 @@
                             label="头像">
                         <template scope="scope">
                             <img style=" height: 60px;width:60px; border: solid 2px lightskyblue; border-radius: 50%;align-items: center;justify-content: center;
-                                    overflow: hidden;" :src="scope.row.photo"/>
+                                    overflow: hidden;" :src="getPhoto()"/>
                         </template>
                     </el-table-column>
                     <el-table-column label="姓名"
@@ -253,6 +253,7 @@
 <script>
     var _this;
     import request from '../../api/request'
+    var image = require("../../assets/img/ldh.png");
 
     export default {
         name: "StudentMange",
@@ -408,7 +409,7 @@
                 }
             },
             getPhoto() {
-                return require("../../assets/img/ldh.png");
+                return image;
             },
             addStudent() {
 
