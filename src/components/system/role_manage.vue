@@ -86,15 +86,15 @@
                                 <div style="margin-top: 20px">
                                     <div>
                                         <el-checkbox style="margin-left: 20px"
-                                                     v-model="contractAllChecked"
-                                                     @change="handleContractCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">签核管理</div>
+                                                     v-model="dataAllChecked"
+                                                     @change="handleDataCheckAllChange"></el-checkbox>
+                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">数据管理</div>
                                     </div>
                                     <ul>
-                                        <li v-for=" item in contractRoleList" style="list-style: none;">
+                                        <li v-for=" item in dataRoleList" style="list-style: none;">
                                             <el-checkbox style="font-weight: normal"
                                                          v-model="item.checked"
-                                                         @change="handleCheckedContractChange">{{item.name}}
+                                                         @change="handleCheckedDataChange">{{item.name}}
                                             </el-checkbox>
                                         </li>
                                     </ul>
@@ -104,15 +104,15 @@
                                 <div style="margin-top: 20px">
                                     <div>
                                         <el-checkbox style="margin-left: 20px"
-                                                     v-model="orderAllChecked"
-                                                     @change="handleOrderCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">订单管理</div>
+                                                     v-model="busAllChecked"
+                                                     @change="handleBusCheckAllChange"></el-checkbox>
+                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">校车管理</div>
                                     </div>
                                     <ul>
-                                        <li v-for=" item in orderRoleList" style="list-style: none;">
+                                        <li v-for=" item in busRoleList" style="list-style: none;">
                                             <el-checkbox style="font-weight: normal"
                                                          v-model="item.checked"
-                                                         @change="handleCheckedOrderChange">{{item.name}}
+                                                         @change="handleCheckedBusChange">{{item.name}}
                                             </el-checkbox>
                                         </li>
                                     </ul>
@@ -122,69 +122,15 @@
                                 <div style="margin-top: 20px">
                                     <div>
                                         <el-checkbox style="margin-left: 20px"
-                                                     v-model="machineAllChecked"
-                                                     @change="handleMachineCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">机器管理</div>
+                                                     v-model="studentAllChecked"
+                                                     @change="handleStudentCheckAllChange"></el-checkbox>
+                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">学生管理</div>
                                     </div>
                                     <ul>
-                                        <li v-for=" item in machineRoleList" style="list-style: none;">
+                                        <li v-for=" item in studentRoleList" style="list-style: none;">
                                             <el-checkbox style="font-weight: normal"
                                                          v-model="item.checked"
-                                                         @change="handleCheckedMachineChange">{{item.name}}
-                                            </el-checkbox>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </el-col>
-                            <el-col :span="3">
-                                <div style="margin-top: 20px">
-                                    <div>
-                                        <el-checkbox style="margin-left: 20px"
-                                                     v-model="planAllChecked"
-                                                     @change="handlePlanCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">计划管理</div>
-                                    </div>
-                                    <ul>
-                                        <li v-for=" item in planRoleList" style="list-style: none;">
-                                            <el-checkbox style="font-weight: normal"
-                                                         v-model="item.checked"
-                                                         @change="handleCheckedPlanChange">{{item.name}}
-                                            </el-checkbox>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </el-col>
-                            <el-col :span="3">
-                                <div style="margin-top: 20px">
-                                    <div>
-                                        <el-checkbox style="margin-left: 20px"
-                                                     v-model="abnormalAllChecked"
-                                                     @change="handleAbnormalCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">异常管理</div>
-                                    </div>
-                                    <ul>
-                                        <li v-for=" item in abnormalRoleList" style="list-style: none;">
-                                            <el-checkbox style="font-weight: normal"
-                                                         v-model="item.checked"
-                                                         @change="handleCheckedAbnormalChange">{{item.name}}
-                                            </el-checkbox>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </el-col>
-                            <el-col :span="3">
-                                <div style="margin-top: 20px">
-                                    <div>
-                                        <el-checkbox style="margin-left: 20px"
-                                                     v-model="taskAllChecked"
-                                                     @change="handleTaskCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">流程管理</div>
-                                    </div>
-                                    <ul>
-                                        <li v-for=" item in taskRoleList" style="list-style: none;">
-                                            <el-checkbox style="font-weight: normal"
-                                                         v-model="item.checked"
-                                                         @change="handleCheckedTaskChange">{{item.name}}
+                                                         @change="handleCheckedStudentChange">{{item.name}}
                                             </el-checkbox>
                                         </li>
                                     </ul>
@@ -245,15 +191,15 @@
                                 <div style="margin-top: 20px">
                                     <div>
                                         <el-checkbox style="margin-left: 20px"
-                                                     v-model="contractAllChecked"
-                                                     @change="handleContractCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">签核管理</div>
+                                                     v-model="dataAllChecked"
+                                                     @change="handleDataCheckAllChange"></el-checkbox>
+                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">数据管理</div>
                                     </div>
                                     <ul>
-                                        <li v-for=" item in contractRoleList" style="list-style: none;">
+                                        <li v-for=" item in dataRoleList" style="list-style: none;">
                                             <el-checkbox style="font-weight: normal"
                                                          v-model="item.checked"
-                                                         @change="handleCheckedContractChange">{{item.name}}
+                                                         @change="handleCheckedDataChange">{{item.name}}
                                             </el-checkbox>
                                         </li>
                                     </ul>
@@ -263,15 +209,15 @@
                                 <div style="margin-top: 20px">
                                     <div>
                                         <el-checkbox style="margin-left: 20px"
-                                                     v-model="orderAllChecked"
-                                                     @change="handleOrderCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">订单管理</div>
+                                                     v-model="busAllChecked"
+                                                     @change="handleBusCheckAllChange"></el-checkbox>
+                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">校车管理</div>
                                     </div>
                                     <ul>
-                                        <li v-for=" item in orderRoleList" style="list-style: none;">
+                                        <li v-for=" item in busRoleList" style="list-style: none;">
                                             <el-checkbox style="font-weight: normal"
                                                          v-model="item.checked"
-                                                         @change="handleCheckedOrderChange">{{item.name}}
+                                                         @change="handleCheckedBusChange">{{item.name}}
                                             </el-checkbox>
                                         </li>
                                     </ul>
@@ -281,69 +227,15 @@
                                 <div style="margin-top: 20px">
                                     <div>
                                         <el-checkbox style="margin-left: 20px"
-                                                     v-model="machineAllChecked"
-                                                     @change="handleMachineCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">机器管理</div>
+                                                     v-model="studentAllChecked"
+                                                     @change="handleStudentCheckAllChange"></el-checkbox>
+                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">学生管理</div>
                                     </div>
                                     <ul>
-                                        <li v-for=" item in machineRoleList" style="list-style: none;">
+                                        <li v-for=" item in studentRoleList" style="list-style: none;">
                                             <el-checkbox style="font-weight: normal"
                                                          v-model="item.checked"
-                                                         @change="handleCheckedMachineChange">{{item.name}}
-                                            </el-checkbox>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </el-col>
-                            <el-col :span="3">
-                                <div style="margin-top: 20px">
-                                    <div>
-                                        <el-checkbox style="margin-left: 20px"
-                                                     v-model="planAllChecked"
-                                                     @change="handlePlanCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">计划管理</div>
-                                    </div>
-                                    <ul>
-                                        <li v-for=" item in planRoleList" style="list-style: none;">
-                                            <el-checkbox style="font-weight: normal"
-                                                         v-model="item.checked"
-                                                         @change="handleCheckedPlanChange">{{item.name}}
-                                            </el-checkbox>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </el-col>
-                            <el-col :span="3">
-                                <div style="margin-top: 20px">
-                                    <div>
-                                        <el-checkbox style="margin-left: 20px"
-                                                     v-model="abnormalAllChecked"
-                                                     @change="handleAbnormalCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">异常管理</div>
-                                    </div>
-                                    <ul>
-                                        <li v-for=" item in abnormalRoleList" style="list-style: none;">
-                                            <el-checkbox style="font-weight: normal"
-                                                         v-model="item.checked"
-                                                         @change="handleCheckedAbnormalChange">{{item.name}}
-                                            </el-checkbox>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </el-col>
-                            <el-col :span="3">
-                                <div style="margin-top: 20px">
-                                    <div>
-                                        <el-checkbox style="margin-left: 20px"
-                                                     v-model="taskAllChecked"
-                                                     @change="handleTaskCheckAllChange"></el-checkbox>
-                                        <div style="font-weight: bold;  margin-bottom: 20px; display: inline">流程管理</div>
-                                    </div>
-                                    <ul>
-                                        <li v-for=" item in taskRoleList" style="list-style: none;">
-                                            <el-checkbox style="font-weight: normal"
-                                                         v-model="item.checked"
-                                                         @change="handleCheckedTaskChange">{{item.name}}
+                                                         @change="handleCheckedStudentChange">{{item.name}}
                                             </el-checkbox>
                                         </li>
                                     </ul>
@@ -384,7 +276,7 @@
         <el-dialog title="提示" :visible.sync="deleteConfirmVisible" width="30%">
             <span>确认要删除[ <b>{{selectedItem.roleName}}</b> ]的角色吗？</span>
             <span slot="footer" class="dialog-footer">
-		    <el-button @click="deleteConfirmVisible = false" icon="el-icon-close">取 消</el-button>
+		    <el-button type="danger" @click="deleteConfirmVisible = false" icon="el-icon-close">取 消</el-button>
 		    <el-button type="primary" @click="onConfirmDelete" icon="el-icon-check">确 定</el-button>
 		  </span>
         </el-dialog>
@@ -435,19 +327,13 @@
                 deleteConfirmVisible: false,
 
                 //存放权限列表
-                contractRoleList: [],
-                orderRoleList: [],
-                machineRoleList: [],
-                planRoleList: [],
-                abnormalRoleList: [],
-                taskRoleList: [],
+                dataRoleList: [],
+                busRoleList: [],
+                studentRoleList: [],
                 systemRoleList: [],
-                contractAllChecked: false,//全选的checkbox是否checked
-                orderAllChecked: false,
-                machineAllChecked: false,
-                planAllChecked: false,
-                abnormalAllChecked: false,
-                taskAllChecked: false,
+                dataAllChecked: false,//全选的checkbox是否checked
+                busAllChecked: false,
+                studentAllChecked: false,
                 systemAllChecked: false
             }
         },
@@ -548,34 +434,22 @@
                 this.errorMsg = false;
 
                 let i;
-                for (i = 0; i < _this.contractRoleList.length; i++) {
-                    _this.contractRoleList[i].checked = false;
+                for (i = 0; i < _this.dataRoleList.length; i++) {
+                    _this.dataRoleList[i].checked = false;
                 }
-                for (i = 0; i < _this.orderRoleList.length; i++) {
-                    _this.orderRoleList[i].checked = false;
+                for (i = 0; i < _this.busRoleList.length; i++) {
+                    _this.busRoleList[i].checked = false;
                 }
-                for (i = 0; i < _this.machineRoleList.length; i++) {
-                    _this.machineRoleList[i].checked = false;
-                }
-                for (i = 0; i < _this.planRoleList.length; i++) {
-                    _this.planRoleList[i].checked = false;
-                }
-                for (i = 0; i < _this.abnormalRoleList.length; i++) {
-                    _this.abnormalRoleList[i].checked = false;
-                }
-                for (i = 0; i < _this.taskRoleList.length; i++) {
-                    _this.taskRoleList[i].checked = false;
+                for (i = 0; i < _this.studentRoleList.length; i++) {
+                    _this.studentRoleList[i].checked = false;
                 }
                 for (i = 0; i < _this.systemRoleList.length; i++) {
                     _this.systemRoleList[i].checked = false;
                 }
 
-                this.contractAllChecked = false;//全选的checkbox是否checked
-                this.orderAllChecked = false;//全选的checkbox是否checked
-                this.machineAllChecked = false;//全选的checkbox是否checked
-                this.planAllChecked = false;
-                this.abnormalAllChecked = false;
-                this.taskAllChecked = false;
+                this.dataAllChecked = false;//全选的checkbox是否checked
+                this.busAllChecked = false;//全选的checkbox是否checked
+                this.studentAllChecked = false;//全选的checkbox是否checked
                 this.systemAllChecked = false
             },
 
@@ -612,120 +486,64 @@
                 })
             },
 
-            handleCheckedContractChange() {
-                if (this.contractCheckedNum === this.contractRoleList.length) {
-                    this.contractAllChecked = true;
+            handleCheckedDataChange() {
+                if (this.dataCheckedNum === this.dataRoleList.length) {
+                    this.dataAllChecked = true;
                 } else {
-                    this.contractAllChecked = false;
+                    this.dataAllChecked = false;
                 }
             },
 
-            handleContractCheckAllChange(){
-                if (this.contractAllChecked) {
-                    for (let i = 0; i < _this.contractRoleList.length; i++) {
-                        _this.contractRoleList[i].checked = true;
+            handleDataCheckAllChange(){
+                if (this.dataAllChecked) {
+                    for (let i = 0; i < _this.dataRoleList.length; i++) {
+                        _this.dataRoleList[i].checked = true;
                     }
                 } else {
-                    for (let i = 0; i < _this.contractRoleList.length; i++) {
-                        this.contractRoleList[i].checked = false;
+                    for (let i = 0; i < _this.dataRoleList.length; i++) {
+                        this.dataRoleList[i].checked = false;
                     }
                 }
             },
 
-            handleOrderCheckAllChange(){
-                if (this.orderAllChecked) {
-                    for (let i = 0; i < this.orderRoleList.length; i++) {
-                        this.orderRoleList[i].checked = true;
+            handleBusCheckAllChange(){
+                if (this.busAllChecked) {
+                    for (let i = 0; i < this.busRoleList.length; i++) {
+                        this.busRoleList[i].checked = true;
                     }
                 } else {
-                    for (let i = 0; i < this.orderRoleList.length; i++) {
-                        this.orderRoleList[i].checked = false;
-                    }
-                }
-            },
-            handleCheckedOrderChange() {
-                if (this.orderCheckedNum === this.orderRoleList.length) {
-                    this.orderAllChecked = true;
-                } else {
-                    this.orderAllChecked = false;
-                }
-            },
-
-            handleMachineCheckAllChange(){
-                if (this.machineAllChecked) {
-                    for (let i = 0; i < this.machineRoleList.length; i++) {
-                        this.machineRoleList[i].checked = true;
-                    }
-                } else {
-                    for (let i = 0; i < this.machineRoleList.length; i++) {
-                        this.machineRoleList[i].checked = false;
+                    for (let i = 0; i < this.busRoleList.length; i++) {
+                        this.busRoleList[i].checked = false;
                     }
                 }
             },
-            handleCheckedMachineChange() {
-                if (this.machineCheckedNum === this.machineRoleList.length) {
-                    this.machineAllChecked = true;
+            handleCheckedBusChange() {
+                if (this.busCheckedNum === this.busRoleList.length) {
+                    this.busAllChecked = true;
                 } else {
-                    this.machineAllChecked = false;
+                    this.busAllChecked = false;
                 }
             },
 
-            handlePlanCheckAllChange(){
-                if (this.planAllChecked) {
-                    for (let i = 0; i < this.planRoleList.length; i++) {
-                        this.planRoleList[i].checked = true;
+            handleStudentCheckAllChange(){
+                if (this.studentAllChecked) {
+                    for (let i = 0; i < this.studentRoleList.length; i++) {
+                        this.studentRoleList[i].checked = true;
                     }
                 } else {
-                    for (let i = 0; i < this.planRoleList.length; i++) {
-                        this.planRoleList[i].checked = false;
-                    }
-                }
-            },
-            handleCheckedPlanChange(){
-                if (this.planCheckedNum === this.planRoleList.length) {
-                    this.planAllChecked = true;
-                } else {
-                    this.planAllChecked = false;
-                }
-            },
-
-            handleAbnormalCheckAllChange() {
-                if (this.abnormalAllChecked) {
-                    for (let i = 0; i < this.abnormalRoleList.length; i++) {
-                        this.abnormalRoleList[i].checked = true;
-                    }
-                } else {
-                    for (let i = 0; i < this.abnormalRoleList.length; i++) {
-                        this.abnormalRoleList[i].checked = false;
+                    for (let i = 0; i < this.studentRoleList.length; i++) {
+                        this.studentRoleList[i].checked = false;
                     }
                 }
             },
-            handleCheckedAbnormalChange() {
-                if (this.abnormalCheckedNum === this.abnormalRoleList.length) {
-                    this.abnormalAllChecked = true;
+            handleCheckedStudentChange() {
+                if (this.studentCheckedNum === this.studentRoleList.length) {
+                    this.studentAllChecked = true;
                 } else {
-                    this.abnormalAllChecked = false;
+                    this.studentAllChecked = false;
                 }
             },
 
-            handleTaskCheckAllChange() {
-                if (this.taskAllChecked) {
-                    for (let i = 0; i < this.taskRoleList.length; i++) {
-                        this.taskRoleList[i].checked = true;
-                    }
-                } else {
-                    for (let i = 0; i < this.taskRoleList.length; i++) {
-                        this.taskRoleList[i].checked = false;
-                    }
-                }
-            },
-            handleCheckedTaskChange() {
-                if (this.taskCheckedNum === this.taskRoleList.length) {
-                    this.taskAllChecked = true;
-                } else {
-                    this.taskAllChecked = false;
-                }
-            },
 
             handleSystemCheckAllChange() {
                 if (this.systemAllChecked) {
@@ -747,41 +565,23 @@
             },
             prepareRoleScopeJson() {
                 let result = "";
-                let contractArr = [];
-                let orderArr = [];
-                let machineArr = [];
-                let planArr = [];
-                let abnormalArr = [];
-                let taskArr = [];
+                let dataArr = [];
+                let busArr = [];
+                let studentArr = [];
                 let systemArr = [];
-                for (let i = 0; i < this.contractRoleList.length; i++) {
-                    if (this.contractRoleList[i].checked) {
-                        contractArr.push(this.contractRoleList[i].path)
+                for (let i = 0; i < this.dataRoleList.length; i++) {
+                    if (this.dataRoleList[i].checked) {
+                        dataArr.push(this.dataRoleList[i].path)
                     }
                 }
-                for (let i = 0; i < this.orderRoleList.length; i++) {
-                    if (this.orderRoleList[i].checked) {
-                        orderArr.push(this.orderRoleList[i].path)
+                for (let i = 0; i < this.busRoleList.length; i++) {
+                    if (this.busRoleList[i].checked) {
+                        busArr.push(this.busRoleList[i].path)
                     }
                 }
-                for (let i = 0; i < this.machineRoleList.length; i++) {
-                    if (this.machineRoleList[i].checked) {
-                        machineArr.push(this.machineRoleList[i].path)
-                    }
-                }
-                for (let i = 0; i < this.planRoleList.length; i++) {
-                    if (this.planRoleList[i].checked) {
-                        planArr.push(this.planRoleList[i].path)
-                    }
-                }
-                for (let i = 0; i < this.abnormalRoleList.length; i++) {
-                    if (this.abnormalRoleList[i].checked) {
-                        abnormalArr.push(this.abnormalRoleList[i].path)
-                    }
-                }
-                for (let i = 0; i < this.taskRoleList.length; i++) {
-                    if (this.taskRoleList[i].checked) {
-                        taskArr.push(this.taskRoleList[i].path)
+                for (let i = 0; i < this.studentRoleList.length; i++) {
+                    if (this.studentRoleList[i].checked) {
+                        studentArr.push(this.studentRoleList[i].path)
                     }
                 }
                 for (let i = 0; i < this.systemRoleList.length; i++) {
@@ -790,12 +590,9 @@
                     }
                 }
                 result = JSON.stringify({
-                    "contract": _this.contractAllChecked || contractArr.length > 0 ? contractArr : null,
-                    "order": _this.orderAllChecked || orderArr.length > 0 ? orderArr : null,
-                    "machine": _this.machineAllChecked || machineArr.length > 0? machineArr : null,
-                    "plan": _this.planAllChecked || planArr.length > 0 ? planArr : null,
-                    "abnormal": _this.abnormalAllChecked || abnormalArr.length > 0 ? abnormalArr : null,
-                    "task": _this.taskAllChecked || taskArr.length > 0 ? taskArr : null,
+                    "datamanage": _this.dataAllChecked || dataArr.length > 0 ? dataArr : null,
+                    "schoolbus": _this.busAllChecked || busArr.length > 0 ? busArr : null,
+                    "student": _this.studentAllChecked || studentArr.length > 0? studentArr : null,
                     "system": _this.systemAllChecked || systemArr.length > 0 ? systemArr : null
                 })
                 return result
@@ -810,92 +607,47 @@
                     return;
                 }
                 let count = 0;
-                if (all.contract != null) {
-                    for (let i = 0; i < this.contractRoleList.length; i++) {
-                        for (let j = 0; j < all.contract.length; j++) {
-                            if (this.contractRoleList[i].path == all.contract[j]) {
-                                this.contractRoleList[i].checked = true;
+                if (all.datamanage != null) {
+                    for (let i = 0; i < this.dataRoleList.length; i++) {
+                        for (let j = 0; j < all.datamanage.length; j++) {
+                            if (this.dataRoleList[i].path == all.datamanage[j]) {
+                                this.dataRoleList[i].checked = true;
                                 count++
                             }
                         }
                     }
-                    if (count == this.contractRoleList.length) {
-                        this.contractAllChecked = true
+                    if (count == this.dataRoleList.length) {
+                        this.dataAllChecked = true
                     }
                 }
 
                 count = 0;
-                if (all.order != null) {
-                    for (let i = 0; i < this.orderRoleList.length; i++) {
-                        for (let j = 0; j < all.order.length; j++) {
-                            if (this.orderRoleList[i].path == all.order[j]) {
-                                this.orderRoleList[i].checked = true;
+                if (all.schoolbus != null) {
+                    for (let i = 0; i < this.busRoleList.length; i++) {
+                        for (let j = 0; j < all.schoolbus.length; j++) {
+                            if (this.busRoleList[i].path == all.schoolbus[j]) {
+                                this.busRoleList[i].checked = true;
                                 count++
                             }
                         }
                     }
-                    if (count == this.orderRoleList.length) {
-                        this.orderAllChecked = true
+                    if (count == this.busRoleList.length) {
+                        this.busAllChecked = true
                     }
                 }
 
                 count = 0;
-                if (all.machine != null) {
-                    for (let i = 0; i < this.machineRoleList.length; i++) {
-                        for (let j = 0; j < all.machine.length; j++) {
-                            if (this.machineRoleList[i].path == all.machine[j]) {
-                                this.machineRoleList[i].checked = true;
+                if (all.student != null) {
+                    for (let i = 0; i < this.studentRoleList.length; i++) {
+                        for (let j = 0; j < all.student.length; j++) {
+                            if (this.studentRoleList[i].path == all.student[j]) {
+                                this.studentRoleList[i].checked = true;
                                 count++
                             }
                         }
                     }
-                    if (count == this.machineRoleList.length) {
-                        this.machineAllChecked = true
-                    }
-                }
-
-                count = 0;
-                if (all.plan != null) {
-                    for (let i = 0; i < this.planRoleList.length; i++) {
-                        for (let j = 0; j < all.plan.length; j++) {
-                            if (this.planRoleList[i].path == all.plan[j]) {
-                                this.planRoleList[i].checked = true;
-                                count++
-                            }
-                        }
-                    }
-                    if (count == this.planRoleList.length) {
-                        this.planAllChecked = true
-                    }
-                }
-
-                count = 0;
-                if (all.abnormal != null) {
-                    for (let i = 0; i < this.abnormalRoleList.length; i++) {
-                        for (let j = 0; j < all.abnormal.length; j++) {
-                            if (this.abnormalRoleList[i].path == all.abnormal[j]) {
-                                this.abnormalRoleList[i].checked = true;
-                                count++
-                            }
-                        }
-                    }
-                    if (count == this.abnormalRoleList.length) {
-                        this.abnormalAllChecked = true
-                    }
-                }
-
-                count = 0;
-                if (all.task != null) {
-                    for (let i = 0; i < this.taskRoleList.length; i++) {
-                        for (let j = 0; j < all.task.length; j++) {
-                            if (this.taskRoleList[i].path == all.task[j]) {
-                                this.taskRoleList[i].checked = true;
-                                count++
-                            }
-                        }
-                    }
-                    if (count == this.taskRoleList.length) {
-                        this.taskAllChecked = true
+                    if (count == this.studentRoleList.length) {
+                        this.studentAllChecked = true
                     }
                 }
 
@@ -917,55 +669,28 @@
         },
         computed: {
 
-            contractCheckedNum() {
+            dataCheckedNum() {
                 let num = 0;
-                for (let i = 0; i < this.contractRoleList.length; i++) {
-                    if (this.contractRoleList[i].checked) {
+                for (let i = 0; i < this.dataRoleList.length; i++) {
+                    if (this.dataRoleList[i].checked) {
                         num = num + 1
                     }
                 }
                 return num
             },
-            orderCheckedNum() {
+            busCheckedNum() {
                 let num = 0;
-                for (let i = 0; i < this.orderRoleList.length; i++) {
-                    if (this.orderRoleList[i].checked) {
+                for (let i = 0; i < this.busRoleList.length; i++) {
+                    if (this.busRoleList[i].checked) {
                         num = num + 1
                     }
                 }
                 return num
             },
-            machineCheckedNum() {
+            studentCheckedNum() {
                 let num = 0;
-                for (let i = 0; i < this.machineRoleList.length; i++) {
-                    if (this.machineRoleList[i].checked) {
-                        num = num + 1
-                    }
-                }
-                return num
-            },
-            planCheckedNum() {
-                let num = 0;
-                for (let i = 0; i < this.planRoleList.length; i++) {
-                    if (this.planRoleList[i].checked) {
-                        num = num + 1
-                    }
-                }
-                return num
-            },
-            abnormalCheckedNum() {
-                let num = 0;
-                for (let i = 0; i < this.abnormalRoleList.length; i++) {
-                    if (this.abnormalRoleList[i].checked) {
-                        num = num + 1
-                    }
-                }
-                return num
-            },
-            taskCheckedNum() {
-                let num = 0;
-                for (let i = 0; i < this.taskRoleList.length; i++) {
-                    if (this.taskRoleList[i].checked) {
+                for (let i = 0; i < this.studentRoleList.length; i++) {
+                    if (this.studentRoleList[i].checked) {
                         num = num + 1
                     }
                 }
@@ -991,58 +716,31 @@
                     for (let j = 0; j < routes[i].children.length; j++) {
                         if (routes[i].children[j].children != null) {
                             switch (routes[i].children[j].path) {
-                                case "/home/contract":
+                                case "/home/datamanage":
                                     for (let k = 0; k < routes[i].children[j].children.length; k++) {
-                                        _this.contractRoleList.push({
+                                        _this.dataRoleList.push({
                                             "path": routes[i].children[j].children[k].path,
                                             "name": routes[i].children[j].children[k].meta,
                                             "checked": 0
                                         })
                                     }
                                     break;
-                                case "/home/order":
+                                case "/home/schoolbus":
                                     for (let k = 0; k < routes[i].children[j].children.length; k++) {
-                                        _this.orderRoleList.push({
+                                        _this.busRoleList.push({
                                             "path": routes[i].children[j].children[k].path,
                                             "name": routes[i].children[j].children[k].meta,
                                             "checked": 0
                                         })
                                     }
                                     break;
-                                case "/home/machine":
+                                case "/home/student":
                                     for (let k = 0; k < routes[i].children[j].children.length; k++) {
-                                        _this.machineRoleList.push({
+                                        _this.studentRoleList.push({
                                             "path": routes[i].children[j].children[k].path,
                                             "name": routes[i].children[j].children[k].meta,
                                             "checked": 0
                                         })
-                                    }
-                                    break;
-                                case "/home/plan":
-                                    for (let k = 0; k < routes[i].children[j].children.length; k++) {
-                                        _this.planRoleList.push({
-                                            "path": routes[i].children[j].children[k].path,
-                                            "name": routes[i].children[j].children[k].meta,
-                                            "checked": 0
-                                        })
-                                    }
-                                    break;
-                                case "/home/abnormal":
-                                    for (let k = 0; k < routes[i].children[j].children.length; k++) {
-                                        _this.abnormalRoleList.push({
-                                            "path": routes[i].children[j].children[k].path,
-                                            "name": routes[i].children[j].children[k].meta,
-                                            "checked": 0
-                                        })
-                                    }
-                                    break;
-                                case "/home/task":
-                                    for (let k = 0; k < routes[i].children[j].children.length; k++) {
-                                        _this.taskRoleList.push({
-                                            "path": routes[i].children[j].children[k].path,
-                                            "name": routes[i].children[j].children[k].meta,
-                                            "checked": 0
-                                        })//checked状态用于存储是否被选中的状态
                                     }
                                     break;
                                 case "/home/system":

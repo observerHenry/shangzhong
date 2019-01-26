@@ -12,7 +12,7 @@
                          :default-active="filterParentPath($route.path)"
                          active-text-color="#1875F0"
                          @select="handleSelect">
-                    <el-menu-item v-for="sub in root.children" v-if="!root.hidden" :index="sub.path" style=" height: 120px;line-height: 120px;text-align: center;padding-left: 0px">
+                    <el-menu-item v-for="sub in root.children" v-if="!root.hidden && showMenu(sub.path)" :index="sub.path" style=" height: 120px;line-height: 120px;text-align: center;padding-left: 0px">
                         <template slot="title">
                             <i :class="sub.icon" style="width: 24px;font-size: 24px"></i>
                             <span style="font-weight: bold;font-size: 16px">{{sub.meta}}</span>
@@ -305,7 +305,7 @@
         filters: {},
         created: function () {
             this.userinfo = JSON.parse(sessionStorage.getItem('user'));
-            //this.fetchUserRoleScope(this.userinfo.role.id);
+            this.fetchUserRoleScope(this.userinfo.roleId);
         },
         mounted: function () {
 //		    setInterval(function getDate() {
