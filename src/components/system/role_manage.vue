@@ -284,8 +284,8 @@
 </template>
 
 <script>
-    import Vue from 'vue'
     import routes from '../../config/routes'
+    import request from '../../api/request'
     let _this;
     export default {
         name: "role_manage",
@@ -340,23 +340,36 @@
         methods: {
             //获取所有role
             fetchRoles(){
-                $.ajax({
-                    url: HOST + "role/list",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {"size": _this.pageSize, "page": _this.currentPage},
-                    success: function (data) {
-                        if (data.code == 200) {
-                            _this.tableData = data.data.list;
-                            _this.totalPage = data.data.total;
-                            _this.startRow = data.data.startRow;
-                        } else {
-                            showMessage(_this, data.message, 0);
-                        }
-                    },
-                    error: function (data) {
-                        showMessage(_this, '服务器访问出错', 0);
+                let params = new URLSearchParams();
+                let condition = {
+                    page: _this.currentPage,
+                    size: _this.pageSize,
+                }
+                if (condition) {
+                    let keys = Object.keys(condition);
+                    for (let key of keys) {
+                        params.append(key, condition[key]);
                     }
+                }
+                request({
+                    url: "/role/list",
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.tableData = res.data.data.list;
+                        _this.totalRecords = res.data.data.total;
+                        _this.startRow = res.data.data.startRow;
+                    }
+                    else {
+                        showMessage(_this,"获取数据失败！");
+                    }
+                    _this.loadingUI = false;
+
+                }).catch(error => {
+                    console.log(error)
+                    _this.loadingUI = false;
+
                 })
             },
 
@@ -370,26 +383,36 @@
             },
 
             addRole() {
-                $.ajax({
-                    url: HOST + "role/add",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {'role': JSON.stringify(_this.form)},
-                    success: function (data) {
-                        _this.isError = data.code != 200;
-                        if (!_this.isError) {
-                            _this.addDialogVisible = false;
-                            _this.fetchRoles();
-                            showMessage(_this, '添加角色成功', 1);
-                        } else {
-                            _this.isError = true;
-                            _this.errorMsg = data.message;
-                        }
-                    },
-                    error: function (data) {
-                        _this.isError = true;
-                        _this.errorMsg = '服务器访问出错';
+                this.form.roleScope = this.prepareRoleScopeJson();
+                let params = new URLSearchParams();
+                let condition = {
+                    role: JSON.stringify(_this.form)
+                };
+                if (condition) {
+                    let keys = Object.keys(condition);
+                    for (let key of keys) {
+                        params.append(key, condition[key]);
                     }
+                }
+                request({
+                    url: "/role/add",
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.addDialogVisible = false;
+                        _this.fetchRoles();
+                        showMessage(_this, '添加角色成功', 1);
+                    } else {
+                        _this.isError = true;
+                        this.errorMsg = res.data.message;
+                    }
+                    _this.loadingUI = false;
+
+                }).catch(error => {
+                    console.log(error)
+                    _this.loadingUI = false;
+
                 })
 
             },
@@ -407,27 +430,36 @@
 
             modifyRole() {
                 this.modifyForm.roleScope = this.prepareRoleScopeJson();
-                $.ajax({
-                    url: HOST + "role/update",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {'role': JSON.stringify(_this.modifyForm)},
-                    success: function (data) {
-                        if (data.code == 200) {
-                            _this.modifyDialogVisible = false;
-                            _this.fetchRoles();
-                            showMessage(_this, '修改角色成功', 1);
-                        } else {
-                            _this.isError = true;
-                            _this.errorMsg = '修改角色失败！'
-                        }
-                    },
-                    error: function (data) {
-                        _this.isError = true;
-                        _this.errorMsg = '服务器访问出错！';
+                let params = new URLSearchParams();
+                let condition = {
+                    role: JSON.stringify(_this.modifyForm)
+                };
+                if (condition) {
+                    let keys = Object.keys(condition);
+                    for (let key of keys) {
+                        params.append(key, condition[key]);
                     }
-                })
+                }
+                request({
+                    url: "/role/update",
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.modifyDialogVisible = false;
+                        _this.fetchRoles();
+                        showMessage(_this, '修改角色成功', 1);
+                    } else {
+                        _this.isError = true;
+                        this.errorMsg = res.data.message;
+                    }
+                    _this.loadingUI = false;
 
+                }).catch(error => {
+                    console.log(error)
+                    _this.loadingUI = false;
+
+                })
             },
             resetStatus() {
                 this.isError = false;
@@ -464,25 +496,35 @@
             },
 
             deleteData(item) {
-                $.ajax({
-                    url: HOST + "role/delete",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {"id": item.id},
-                    success: function (data) {
-                        if (data.code == 200) {
-                            showMessage(_this, '删除角色成功', 1);
-                            _this.fetchRoles();
-                        } else {
-                            showMessage(_this, data.message, 0);
-                        }
-                        _this.deleteConfirmVisible = false;
-                    },
-                    error: function (data) {
-                        showMessage(_this, '服务器访问出错！', 0);
-                        _this.deleteConfirmVisible = false;
-
+                let params = new URLSearchParams();
+                let condition = {
+                    id: item.id
+                };
+                if (condition) {
+                    let keys = Object.keys(condition);
+                    for (let key of keys) {
+                        params.append(key, condition[key]);
                     }
+                }
+                request({
+                    url: "/role/delete",
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.modifyDialogVisible = false;
+                        _this.fetchRoles();
+                        showMessage(_this, '删除角色成功', 1);
+                    } else {
+                        _this.isError = true;
+                        this.errorMsg = res.data.message;
+                    }
+                    _this.loadingUI = false;
+
+                }).catch(error => {
+                    console.log(error);
+                    _this.loadingUI = false;
+
                 })
             },
 
