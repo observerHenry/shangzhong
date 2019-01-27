@@ -31,17 +31,6 @@
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4">
-                            <el-form-item label="小组:">
-                                <el-select v-model="filters.groupId" clearable>
-                                    <el-option
-                                            v-for="item in allGroups"
-                                            v-bind:value="item.id"
-                                            v-bind:label="item.groupName">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
                         <el-col :span="3">
                             <el-form-item label="状态:">
                                 <el-select v-model="filters.valid" clearable>
@@ -98,18 +87,11 @@
 
                         <el-table-column
                                 align="center"
-		                        prop="role.roleName"
+                                prop="roleId"
 		                        label="角色" >
-                        </el-table-column >
-                        <el-table-column
-                                align="center"
-                                prop="group.groupName"
-                                label="安装组" >
-                        </el-table-column >
-                        <el-table-column
-                                align="center"
-                                prop="marketGroupName"
-                                label="销售组" >
+                                <template scope="scope">
+                                    {{filterRoleName(scope.row.roleId)}}
+                                </template>
                         </el-table-column >
                         <el-table-column
                                 align="center"
@@ -153,7 +135,7 @@
                 </el-col >
             </el-row >
         </el-col >
-        <el-dialog title="增加用户" :visible.sync="addDialogVisible" width="50%">
+        <el-dialog title="增加用户" :visible.sync="addDialogVisible" width="40%">
             <el-form :model="form" >
 
                 <el-col :span="8">
@@ -176,7 +158,7 @@
 				<!--<el-input v-model="form.confirmpwd" @change="onChange"></el-input>-->
 				<!--</el-form-item>-->
 				<!--</el-col>-->
-                <el-col :span="6" >
+                <el-col :span="8" >
                     <el-form-item label="角色："  :label-width="formLabelWidth">
                         <el-select v-model="form.roleId" @change="onChange">
                             <el-option
@@ -187,29 +169,7 @@
                         </el-select >
                     </el-form-item >
                 </el-col >
-                <el-col :span="6" >
-                    <el-form-item label="安装组："  :label-width="formLabelWidth">
-                        <el-select v-model="form.groupId" @change="onChange" clearable>
-                            <el-option
-                                    v-for="item in allGroups"
-                                    v-bind:value="item.id"
-                                    v-bind:label="item.groupName" >
-                            </el-option >
-                        </el-select >
-                    </el-form-item >
-                </el-col >
-                <el-col :span="6" >
-                    <el-form-item label="销售组："  :label-width="formLabelWidth">
-                        <el-select v-model="form.marketGroupName" @change="onChange" clearable>
-                            <el-option
-                                    v-for="item in allMarketGroups"
-                                    v-bind:value="item.groupName"
-                                    v-bind:label="item.groupName" >
-                            </el-option >
-                        </el-select >
-                    </el-form-item >
-                </el-col >
-                <el-col :span="6" >
+                <el-col :span="8" >
                     <el-form-item label="在职情况："  :label-width="formLabelWidth">
                         <el-select v-model="form.valid" @change="onChange">
                             <el-option
@@ -233,7 +193,7 @@
             </div >
         </el-dialog >
 
-        <el-dialog title="编辑用户" :visible.sync="modifyDialogVisible" width="50%">
+        <el-dialog title="编辑用户" :visible.sync="modifyDialogVisible" width="40%">
             <el-form :model="modifyForm" >
                 <el-col :span="8" >
                     <el-form-item label="账号：" :label-width="formLabelWidth">
@@ -250,12 +210,7 @@
                         <el-input v-model="modifyForm.password" @change="onChange"></el-input>
                     </el-form-item>
 				</el-col>
-				<!--<el-col :span="12">-->
-				<!--<el-form-item label="确认密码：" :label-width="formLabelWidth">-->
-				    <!--<el-input v-model="modifyForm.confirmpwd" @change="onChange"></el-input>-->
-				<!--</el-form-item>-->
-				<!--</el-col>-->
-                <el-col :span="6" >
+                <el-col :span="8" >
                     <el-form-item label="角色：" :label-width="formLabelWidth" >
                          <el-select v-model="modifyForm.roleId" @change="onChange">
                             <el-option
@@ -266,29 +221,7 @@
                         </el-select >
                     </el-form-item >
                 </el-col >
-                <el-col :span="6" >
-                    <el-form-item label="安装组：" :label-width="formLabelWidth" >
-                        <el-select v-model="modifyForm.groupId" @change="onChange" clearable>
-                            <el-option
-                                    v-for="item in allGroups"
-                                    v-bind:value="item.id"
-                                    v-bind:label="item.groupName" >
-                            </el-option >
-                        </el-select >
-                    </el-form-item >
-                </el-col >
-                <el-col :span="6" >
-                    <el-form-item label="销售组："  :label-width="formLabelWidth">
-                        <el-select v-model="modifyForm.marketGroupName" @change="onChange" clearable>
-                            <el-option
-                                    v-for="item in allMarketGroups"
-                                    v-bind:value="item.groupName"
-                                    v-bind:label="item.groupName" >
-                            </el-option >
-                        </el-select >
-                    </el-form-item >
-                </el-col >
-                <el-col :span="6" >
+                <el-col :span="8" >
                     <el-form-item label="在职情况："  :label-width="formLabelWidth">
                         <el-select v-model="modifyForm.valid" @change="onChange">
                             <el-option
@@ -300,13 +233,13 @@
                     </el-form-item >
                 </el-col >
             </el-form >
-            <el-alert v-if="isError" style="margin-top: 10px;padding: 5px;"
+            <el-alert v-if="isError" style="margin-top: 20px;padding: 5px;"
                       :title="errorMsg"
                       type="error"
                       :closable="false"
                       show-icon >
             </el-alert >
-            <div slot="footer" class="dialog-footer" style="margin-bottom: 20px" >
+            <div slot="footer" class="dialog-footer" style="margin-bottom: 20px;margin-top: 20px" >
                 <el-button @click="modifyDialogVisible = false" icon="el-icon-close" type="danger">取 消</el-button >
                 <el-button type="primary" @click="onEidt" icon="el-icon-check">确 定</el-button >
             </div >
@@ -324,6 +257,7 @@
 
 <script >
     var _this;
+    import request from '../../api/request'
     export default {
 	    name: "part_manage",
 	    components: {},
@@ -346,11 +280,8 @@
 			    form: {
 				    account: "",
 				    name: "",
-                    password:"",
-                    confirmpwd:"",
+                    password:null,
 				    roleId: "",
-					groupId: "",
-                    marketGroupName:"",
                     valid:1
 			    },
 			    formLabelWidth: '100px',
@@ -361,23 +292,17 @@
 				    id: '',
 				    account: "",
 				    name: "",
-                    password:"",
-                    confirmpwd:"",
+                    password:null,
 				    roleId: "",
-                    groupId: "",
-                    marketGroupName:"",
                     valid:""
 			    },
 			    filters: {
 				    name: "",
 				    account: "",
                     roleId:"",
-                    groupId:"",
 				    valid: "",
 			    },
 			    allRoles: [],
-                allGroups: [],
-                allMarketGroups: [],
                 valid: [{"valid":1, "name":"在职"},{"valid":0, "name":"离职"}],
 			    loadingUI: false,
 		    }
@@ -405,7 +330,6 @@
 
             onSelectUsers() {
 			    _this.tableData = new Array();
-			    _this.loadingUI = true;
                 _this.filters.page = _this.currentPage;
                 _this.filters.size = _this.pageSize;
 			    $.ajax({
@@ -418,18 +342,10 @@
 						    _this.totalRecords = data.data.total;
                             _this.tableData = data.data.list;
                             _this.startRow = data.data.startRow;
-                            var userinfo = JSON.parse(sessionStorage.getItem('user'));
-//                            for(var i=0; i<_this.tableData.length; i++){
-//                                if(_this.tableData[i].account == "admin" && userinfo != null && userinfo.account != "admin"){
-//                                    _this.tableData.splice(i, 1);
-//                                }
-//                            }
 					    }
-                        _this.loadingUI = false;
 				    },
                     error: function (data) {
                         showMessage(_this, '服务器访问出错', 0);
-                        _this.loadingUI = false;
                     }
 			    })
 		    },
@@ -449,11 +365,8 @@
                 this.modifyForm.id = item.id;
                 this.modifyForm.account = item.account;
                 this.modifyForm.name = item.name;
-                this.modifyForm.roleId = item.role.id;
-                this.modifyForm.groupId = item.group != null ? item.group.id : "";
-                this.modifyForm.marketGroupName = item.marketGroupName != null ? item.marketGroupName : "";
-                this.modifyForm.password =  "";
-                this.modifyForm.confirmpwd =  "";
+                this.modifyForm.roleId = item.roleId;
+                //this.modifyForm.password =  "";
                 this.modifyForm.valid =  item.valid;
                 this.isError = this.validateForm(this.modifyForm, true);
 			    this.modifyDialogVisible = true;
@@ -499,17 +412,6 @@
                     iserror = true;
                     this.errorMsg = '姓名不能为空';
                 }
-
-                // if (!iserror && !isEdit) {
-                //     if (isStringEmpty(formObj.password)) {
-                //         iserror = true;
-                //         this.errorMsg = '密码不能为空';
-                //     } else if (!isEdit && formObj.password != formObj.confirmpwd) {
-                //         iserror = true;
-                //         this.errorMsg = '密码和确认密码不一致';
-                //     }
-                // }
-
                 if (!iserror && formObj.roleId == "") {
                     iserror = true;
                     this.errorMsg = '请选择角色';
@@ -525,13 +427,13 @@
 
 		    onAdd() {
 			    this.isError = _this.validateForm(this.form, false);
-
 			    if (!this.isError) {
 				    $.ajax({
 					    url: HOST + "user/add",
 					    type: 'POST',
 					    dataType: 'json',
-					    data: {"user": JSON.stringify(this.form)},
+                        contentType: 'application/json',
+					    data: JSON.stringify(_this.form),
 					    success: function (data) {
 						    if (data.code == 200) {
 							    _this.onSelectUsers();
@@ -576,54 +478,34 @@
 		    },
 
 		    initAllRoles() {
-			    $.ajax({
-				    url: HOST + "/role/list",
-				    type: 'POST',
-				    dataType: 'json',
-				    data: {},
-				    success: function (data) {
-					    if (data.code == 200) {
-						    _this.allRoles = data.data.list;
-					    }
-				    },
-                    error: function (data) {
-                        showMessage(_this, '获取角色信息错误！', 0);
+                let params = new URLSearchParams();
+                request({
+                    url: "/role/list",
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.allRoles = res.data.data.list;
                     }
-			    })
-		    },
-
-            initAllGroups() {
-			    $.ajax({
-				    url: HOST + "/install/group/list",
-				    type: 'POST',
-				    dataType: 'json',
-				    data: {},
-				    success: function (data) {
-					    if (data.code == 200) {
-						    _this.allGroups = data.data.list;
-					    }
-				    },
-                    error: function (data) {
-                        showMessage(_this, '获取安装组信息错误！', 0);
+                    else {
+                        showMessage(_this,"获取数据失败！");
                     }
-			    })
-		    },
-            initMarketGroups() {
-                $.ajax({
-                    url: HOST + "/market/group/list",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {},
-                    success: function (data) {
-                        if (data.code == 200) {
-                            _this.allMarketGroups = data.data.list;
-                        }
-                    },
-                    error: function (data) {
-                        showMessage(_this, '获取销售组信息错误！', 0);
-                    }
+                }).catch(error => {
+                    console.log(error)
+                    _this.loadingUI = false;
                 })
-            },
+		    },
+            filterRoleName(id) {
+		        let roleName = "";
+                for (let i = 0; i < _this.allRoles.length; i++) {
+                    if(_this.allRoles[i].id == id) {
+                        roleName = _this.allRoles[i].roleName;
+                        break;
+                    }
+                }
+                return roleName;
+            }
+
 	    },
 	    computed: {},
 	    filters: {
@@ -636,9 +518,6 @@
 			    return;
 		    }
 		    this.initAllRoles();
-			this.initAllGroups();
-			this.initMarketGroups();
-
 	    },
 	    mounted: function () {
 		    this.onSelectUsers();
