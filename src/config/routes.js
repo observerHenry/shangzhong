@@ -23,6 +23,7 @@ import ChangeMange from "../components/student/changemange.vue"
 import System from "../components/system.vue"
 import UserManage from '../components/system/user_manage.vue'
 import RoleManage from '../components/system/role_manage.vue'
+import DataSync from '../components/system/data_sync.vue'
 
 
 export default
@@ -152,12 +153,18 @@ export default
 						name: 'role_manage',
 						meta: '角色管理'
 					},
+                    {
+                        path: '/home/system/data_sync',
+                        component: DataSync,
+                        name: 'data_sync',
+                        meta: '数据同步'
+                    }
 				],
 			},
 		]
 	},
 	{
-		path: '*',
+		path: '/',
 		redirect: '/home',
 		hidden: true
 	},
