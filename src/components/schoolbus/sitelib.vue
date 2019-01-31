@@ -6,7 +6,7 @@
                     <span style="font-weight: 600;color:#5D5D5D;font-size: 15px">站点列表</span >
                 </div>
             </el-col >
-            <el-col :span="1" :offset="19" >
+            <el-col :span="2" :offset="18" >
                 <el-button
                         icon="el-icon-download"
                         size="normal"
@@ -27,7 +27,7 @@
         </el-row >
         <el-row class="well" style="background-color: white;margin-top: 20px;">
             <el-row>
-                <el-col :span="2" style="text-align: center;margin-top: 10px">
+                <el-col :span="3" style="text-align: center;margin-top: 10px">
                     <div style="width: 200px;" >
                         <el-button
 
@@ -45,7 +45,7 @@
                             @click="onDeleteMore">
                     </el-button >
                 </el-col >
-                <el-col :span="21">
+                <el-col :span="20">
                     <div style="text-align: left" >
                         <el-row style="margin-top: 10px;margin-bottom: 20px">
                             <el-col :span="5" :offset="16" >

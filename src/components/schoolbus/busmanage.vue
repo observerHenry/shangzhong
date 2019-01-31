@@ -6,7 +6,7 @@
                     <span style="font-weight: 600;color:#5D5D5D;font-size: 15px">校车列表</span >
                 </div>
             </el-col >
-            <el-col :span="1" :offset="19" >
+            <el-col :span="2" :offset="18" >
                 <el-button
 		                icon="el-icon-download"
 		                size="normal"
@@ -95,12 +95,18 @@
                     </el-table-column >
                     <el-table-column
                             align="center"
+                            prop="plateNumber"
+                            sortable
+                            label="车牌" >
+                    </el-table-column >
+                    <el-table-column
+                            align="center"
                             prop="busRangeName"
                             sortable
                             label="早/午区间" >
                         <template scope="scope" >
                             <div >
-                                {{scope.row.busRangeName}}
+                                {{scope.row.busLineName}}
                             </div >
                         </template >
                     </el-table-column >
@@ -186,7 +192,7 @@
 			    multipleSelection: [],
 			    regionData: {
 				    selectId: "0",
-				    selectName: '',
+				    selectName: '浦东',
 				    subList: RegionList,
 			    },
 			    deleteConfirmDialog: false,
