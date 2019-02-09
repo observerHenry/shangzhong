@@ -140,10 +140,10 @@
                         background
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
-                        :current-page.sync="currentPage3"
-                        :page-size="8"
-                        layout="prev, pager, next, jumper"
-                        :total="88">
+                        :current-page.sync="currentPage"
+                        :page-size="pageSize"
+                        layout="total, prev, pager, next, jumper"
+                        :total="totalRecords">
                 </el-pagination>
             </el-col>
         </el-row>
@@ -260,17 +260,13 @@
         components: {},
         data() {
             _this = this;
-            return {
-                tableData: [
-                    // {
-                    //     id: "320001",
-                    //     photo: _this.getPhoto(),
-                    //     name: "刘德华",
-                    //     class: "3年级1班",
-                    //     bus: "1号校车",
-                    //     busStation: "西藏北路柳营路/西藏北路苏北路"
-                    // }
-                ],
+            return {	    //分页
+                pageSize: EveryPageNum,//每一页的num
+                currentPage: 1,
+                startRow: 1,
+                tableData: [],
+                totalRecords:0,
+                currentGrade:"",
                 searchContent: "",
                 classArrays: [
                     // {
@@ -304,6 +300,12 @@
             }
         },
         methods: {
+            handleSizeChange(val) {
+            },
+            handleCurrentChange(val) {
+                this.currentPage = val;
+                this.fetchStudents();
+            },
             getClasses() {
                 let params = new URLSearchParams();
                 request({
@@ -318,7 +320,7 @@
                             if(_this.classArrays.length == 0 ) {
                                 let data = {
                                     grade_id:res.data.data.list[i].grade,
-                                    label: res.data.data.list[i].grade + "年级",
+                                    label: res.data.data.list[i].grade,
                                     classes: []
                                 }
                                 data.classes.push({
@@ -340,7 +342,7 @@
                                 if(!gradeFound) {
                                     let data = {
                                         grade_id:res.data.data.list[i].grade,
-                                        label: res.data.data.list[i].grade + "年级",
+                                        label: res.data.data.list[i].grade,
                                         classes: []
                                     }
                                     data.classes.push({
@@ -385,17 +387,32 @@
                 })
             },
             handleNodeClick(data) {
-                //只监听班级的点击
-                if(!isUndefined(data.id)) {
+                _this.currentGrade = data;
+                _this.currentPage = 1;
+                _this.startRow = 1;
+                _this.fetchStudents();
+            },
+            getPhoto() {
+                return image;
+            },
+            addStudent() {
+
+            },
+            fetchStudents() {
+                if(!isUndefined(_this.currentGrade.id)) {
                     let params = new URLSearchParams();
-                    params.append("className",data.label);
+                    params.append("className",_this.currentGrade.label);
+                    params.append("page", _this.currentPage);
+                    params.append("size", _this.pageSize);
                     request({
                         url: '/student/getStudents',
                         method: 'post',
                         data: params
                     }).then(res => {
                         if (res.data.code == 200) {
+                            _this.totalRecords = res.data.data.total;
                             _this.tableData = res.data.data.list;
+                            _this.startRow = res.data.data.startRow;
                         } else {
                             showMessage(_this,"获取数据失败！");
                         }
@@ -408,35 +425,6 @@
                     })
                 }
             },
-            getPhoto() {
-                return image;
-            },
-            addStudent() {
-
-            },
-            getTransportRangeMorning(busNumber) {
-                let params = new URLSearchParams();
-                params.append("busNumber", busNumber);
-                params.append("busMode", "早班");
-                request({
-                    url: '/transport/range/getTransportRangeByBusNumberAndBusMode',
-                    method: 'post',
-                    data: params
-                }).then(res => {
-                    if (res.data.code == 200) {
-                        _this.busLineMorning = JSON.parse(res.data.data.list[0].stations);
-                    } else {
-                        showMessage(_this,"获取数据失败！");
-                    }
-                    _this.loadingUI = false;
-
-                }).catch(error => {
-                    console.log(error)
-                    _this.loadingUI = false;
-
-                })
-            },
-
             getTransportRangeAfternoon(busNumber) {
                 let params = new URLSearchParams();
                 params.append("busNumber", busNumber);
@@ -463,7 +451,6 @@
             handleEdit(index, data) {
                 _this.modifyForm = data;
                 _this.modifyDialogVisible = true;
-                _this.getTransportRangeMorning(data.busNumber);
                 _this.getTransportRangeAfternoon(data.busNumber);
             },
 

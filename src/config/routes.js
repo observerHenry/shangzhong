@@ -11,7 +11,7 @@ import DataBus from "../components/datamanage/databus.vue"
 import SchoolBus from "../components/schoolbus.vue"
 import BusManage from "../components/schoolbus/busmanage.vue"
 import NightWay from "../components/schoolbus/nightway.vue"
-import LineManage from "../components/schoolbus/nightway.vue"
+import LineManage from "../components/schoolbus/linemanage.vue"
 import SiteLib from "../components/schoolbus/sitelib.vue"
 
 import Student from "../components/student.vue"

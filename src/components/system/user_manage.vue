@@ -135,7 +135,7 @@
                 </el-col >
             </el-row >
         </el-col >
-        <el-dialog title="增加用户" :visible.sync="addDialogVisible" width="40%">
+        <el-dialog title="增加用户" :visible.sync="addDialogVisible" width="60%">
             <el-form :model="form" >
 
                 <el-col :span="8">
@@ -149,9 +149,9 @@
                     </el-form-item>
                 </el-col >
 				<el-col :span="8">
-				<el-form-item label="密码：" :label-width="formLabelWidth">
-				<el-input v-model="form.password" @change="onChange"></el-input>
-				</el-form-item>
+                    <el-form-item label="密码：" :label-width="formLabelWidth">
+                        <el-input v-model="form.password" @change="onChange"></el-input>
+                    </el-form-item>
 				</el-col>
 				<!--<el-col :span="12">-->
 				<!--<el-form-item label="确认密码：" :label-width="formLabelWidth">-->
@@ -193,7 +193,7 @@
             </div >
         </el-dialog >
 
-        <el-dialog title="编辑用户" :visible.sync="modifyDialogVisible" width="40%">
+        <el-dialog title="编辑用户" :visible.sync="modifyDialogVisible" width="60%">
             <el-form :model="modifyForm" >
                 <el-col :span="8" >
                     <el-form-item label="账号：" :label-width="formLabelWidth">
@@ -316,7 +316,6 @@
 				    _this.isError = _this.validateForm(_this.modifyForm, true);
 			    }
 		    },
-
 
 		    handleSizeChange(val) {
 		    },
