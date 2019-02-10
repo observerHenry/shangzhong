@@ -129,22 +129,18 @@
                             align="center"
                             label="操作" >
                         <template scope="scope" >
-                            <el-tooltip placement="top" content="修改" >
-                                <el-button
-                                        size="mini"
-                                        type="primary"
-                                        icon="el-icon-edit"
-                                        @click="onUpdate(scope.row)" >
-                                </el-button >
-                            </el-tooltip >
-                            <el-tooltip placement="top" content="删除" >
-                                <el-button
-                                        size="mini"
-                                        type="success"
-                                        icon="el-icon-delete"
-                                        @click="onDelete(scope.row)" >
-                                </el-button >
-                            </el-tooltip >
+                            <el-button
+                                    size="mini"
+                                    type="primary"
+                                    icon="el-icon-edit"
+                                    @click="onUpdate(scope.row)" >
+                            </el-button >
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    icon="el-icon-delete"
+                                    @click="onDelete(scope.row)" >
+                            </el-button >
                         </template >
                     </el-table-column >
                 </el-table >
@@ -160,6 +156,217 @@
                 </div >
             </el-col>
         </el-row >
+        <el-dialog :visible.sync="modifyDialogVisible" width="60%">
+            <el-row>
+                <el-col :span="4">
+                    <el-menu :default-active="activeIndex" style="min-height: 400px;width: 200px" @select="handleBusSelect">
+                        <el-menu-item index="1">
+                            <i class="el-icon-document"></i>
+                            <span slot="title">基本信息</span>
+                        </el-menu-item>
+                        <el-menu-item index="2">
+                            <i class="el-icon-menu"></i>
+                            <span slot="title">区间信息</span>
+                        </el-menu-item>
+                        <el-menu-item index="3">
+                            <i class="el-icon-service"></i>
+                            <span slot="title">学生列表</span>
+                        </el-menu-item>
+                    </el-menu>
+                </el-col>
+
+                <el-col :span="18" :offset="1">
+                    <div v-show="activeIndex == '1'">
+                        <h4>基本信息</h4>
+                        <el-form :model="modifyForm">
+                            <el-row style="margin-top: 20px">
+                                <el-col :span="7">
+                                    <el-form-item label="所属校区：">
+                                        <el-select v-model="modifyForm.schoolPartition" clearable>
+                                            <el-option
+                                                    v-for="item in regionList"
+                                                    v-bind:value="item.name"
+                                                    v-bind:label="item.name">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <div style="height: 1px;width: 95%;background-color: whitesmoke;margin-top: 10px;margin-bottom: 10px"></div>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="校车编号：">
+                                        <el-input v-model="modifyForm.number" clearable></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="7" :offset="1">
+                                    <el-form-item label="车牌信息：">
+                                        <el-input v-model="modifyForm.plateNumber" clearable></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="7" :offset="1">
+                                    <el-form-item label="校车供应商：">
+                                        <el-input v-model="modifyForm.busSupplier" clearable></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <div style="height: 1px;width: 95%;background-color: whitesmoke;margin-top: 10px;margin-bottom: 10px"></div>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="校车司机：">
+                                        <el-select v-model="modifyForm.busDriver" clearable filterable>
+                                            <el-option
+                                                    v-for="item in driverList"
+                                                    v-bind:value="item.id"
+                                                    v-bind:label="item.name">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="7" :offset="1">
+                                    <el-form-item label="Bus妈妈：">
+                                        <el-select v-model="modifyForm.busMom" clearable filterable>
+                                            <el-option
+                                                    v-for="item in busMomList"
+                                                    v-bind:value="item.id"
+                                                    v-bind:label="item.name">
+                                            </el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </el-form>
+                        <el-alert v-if="isError" style="margin-top: 10px;padding: 5px;"
+                                  :title="errorMsg"
+                                  type="error"
+                                  :closable="false"
+                                  show-icon>
+                        </el-alert>
+                        <el-row style="margin-bottom: 20px;margin-right: 40px">
+                            <el-col :span="2" :offset="18">
+                                <el-button @click="modifyDialogVisible = false" icon="el-icon-close" type="danger">取 消</el-button>
+                            </el-col>
+                            <el-col :span="3" :offset="1">
+                                <el-button type="primary" @click="onConfirmEdit" icon="el-icon-check">保存修改</el-button>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <div v-show="activeIndex == '2'">
+                        <el-tabs type="border-card">
+                            <el-tab-pane label="早班站点">
+                                <el-table
+                                    :data="morningLineStations"
+                                    border
+                                    highlight-current-row
+                                    empty-text="暂无数据..."
+                                    style="width: 100%;" >
+                                    <el-table-column
+                                            width="75"
+                                            align="center"
+                                            label="序号" >
+                                        <template scope="scope">
+                                            {{scope.$index+1}}
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                            align="center"
+                                            prop="station"
+                                            sortable
+                                            label="站点名">
+
+                                    </el-table-column>
+                                </el-table>
+                            </el-tab-pane>
+                            <el-tab-pane label="午班站点">
+                                <el-table
+                                        :data="afternoonLineStations"
+                                        border
+                                        highlight-current-row
+                                        empty-text="暂无数据..."
+                                        style="width: 100%;" >
+                                    <el-table-column
+                                            width="75"
+                                            align="center"
+                                            label="序号" >
+                                        <template scope="scope">
+                                            {{scope.$index+1}}
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                            align="center"
+                                            prop="station"
+                                            sortable
+                                            label="站点名">
+
+                                    </el-table-column>
+                                </el-table>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </div>
+                    <div v-show="activeIndex == '3'">
+                        <el-table
+                                :data="students"
+                                border
+                                highlight-current-row
+                                empty-text="暂无数据..."
+                                style="width: 100%;"
+                                max-height="600" >
+                            <!--<el-table-column-->
+                            <!--width="75"-->
+                            <!--align="center"-->
+                            <!--label="序号" >-->
+                            <!--<template scope="scope">-->
+                            <!--{{scope.$index+1}}-->
+                            <!--</template>-->
+                            <!--</el-table-column>-->
+                            <el-table-column
+                                    align="center"
+                                    prop="studentNumber"
+                                    width="80"
+                                    sortable
+                                    label="学号">
+                            </el-table-column>
+                            <el-table-column
+                                    align="center"
+                                    prop="station"
+                                    width="120"
+                                    label="头像">
+
+                            </el-table-column>
+                            <el-table-column
+                                    align="center"
+                                    prop="name"
+                                    width="120"
+                                    sortable
+                                    label="姓名">
+
+                            </el-table-column>
+                            <el-table-column
+                                    align="center"
+                                    prop="banjiName"
+                                    width="120"
+                                    sortable
+                                    label="班级">
+
+                            </el-table-column>
+                            <el-table-column
+                                    align="center"
+                                    prop="busNumber"
+                                    width="120"
+                                    sortable
+                                    label="校车">
+
+                            </el-table-column>
+                            <el-table-column
+                                    align="center"
+                                    prop="boardStationMorningName"
+                                    label="站点">
+                            </el-table-column>
+                        </el-table>
+                    </div>
+                </el-col>
+            </el-row>
+        </el-dialog>
         <el-dialog title="提示" :visible.sync="deleteConfirmDialog"
                    append-to-body width="30%" >
             <span >确认要删除选定的校车吗？</span >
@@ -190,16 +397,41 @@
 			    loadingUI: false,
 			    tableData: [],
 			    multipleSelection: [],
+                regionList:RegionList,
 			    regionData: {
 				    selectId: "0",
 				    selectName: '浦东',
 				    subList: RegionList,
 			    },
+                modifyForm: {
+			        id:"",
+                    schoolPartition:"",
+                    number:"",
+                    plateName:"",
+                    busSupplier:"",
+                    busMom:"",
+                    busDriver:""
+                },
+                driverList:[],
+                busMomList:[],
+                activeIndex:'1',
 			    deleteConfirmDialog: false,
+                modifyDialogVisible: false,
 			    selectedItem: {},
+                morningLineStations:[],
+                afternoonLineStations:[],
+                students:[]
 		    }
 	    },
 	    methods: {
+            handleBusSelect(val) {
+                _this.activeIndex = val;
+                if(val == '2') {
+                    _this.fetchBusStations();
+                } else if(val === '3') {
+                    _this.fetchStudentsByBusNumber();
+                }
+            },
 		    handleSelectionChange(val) {
 			    _this.multipleSelection = val;
 		    },
@@ -224,8 +456,28 @@
 			    }
 		    },
 		    onUpdate(row) {
-			    _this.selectedItem = row;
+			    _this.modifyForm = copyObjectByJSON(row);
+			    _this.modifyDialogVisible = true;
+                _this.activeIndex = '1'
 		    },
+            onConfirmEdit() {
+                let params = new URLSearchParams();
+                params.append("busBaseInfo",JSON.stringify(_this.modifyForm));
+                request({
+                    url: '/bus/base/info/update',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        showMessage(_this,"更新校车基本信息成功！", 1);
+                        _this.search();
+                    } else {
+                        showMessage(_this,"更新校车基本信息失败！");
+                    }
+                }).catch(error => {
+                    console.log(error);
+                })
+            },
 		    onDelete(row) {
 			    _this.selectedItem = row;
 			    _this.deleteConfirmDialog = true;
@@ -235,7 +487,7 @@
 			    let params = new URLSearchParams();
 			    params.append('id', _this.selectedItem.id);
 			    request({
-				    url: `${HOST}bus/base/info/delete`,
+				    url: `/bus/base/info/delete`,
 				    method: 'post',
 				    data: params
 			    }).then(response => {
@@ -284,6 +536,96 @@
 				    _this.loadingUI = false;
 			    })
 		    },
+            fetchBusDriver() {
+                let params = new URLSearchParams();
+                params.append("roleId",5);
+                request({
+                    url: '/user/selectUsers',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.driverList = res.data.data.list;
+                    } else {
+                        showMessage(_this,"获取校车司机数据失败！");
+                    }
+                }).catch(error => {
+                    console.log(error)
+
+                })
+            },
+            fetchBusMom() {
+                let params = new URLSearchParams();
+                params.append("roleId",3);
+                request({
+                    url: '/user/selectUsers',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.busMomList = res.data.data.list;
+                    } else {
+                        showMessage(_this,"获取Bus妈妈数据失败！");
+                    }
+                }).catch(error => {
+                    console.log(error)
+
+                })
+            },
+            fetchBusStations() {
+                _this.morningLineStations = [];
+                _this.afternoonLineStations = [];
+                let params = new URLSearchParams();
+                params.append("busNumber",_this.modifyForm.number);
+                request({
+                    url: '/bus/line/getBusLineByBusNumber',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        let lineLists = res.data.data.list;
+                        for (let i = 0; i < lineLists.length; i++) {
+                            if(lineLists[i].stations != "") {
+                                if(lineLists[i].mode === "早班") {
+                                    let stations = lineLists[i].stations.split(",");
+                                    for (let j = 0; j < stations.length; j++) {
+                                        _this.morningLineStations.push({"station":stations[j]});
+                                    }
+                                }
+                                if(lineLists[i].mode === "午班") {
+                                    let stations = lineLists[i].stations.split(",");
+                                    for (let j = 0; j < stations.length; j++) {
+                                        _this.afternoonLineStations.push({"station":stations[j]});
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        showMessage(_this,"获取线路站点数据失败！");
+                    }
+                }).catch(error => {
+                    console.log(error)
+
+                })
+            },
+            fetchStudentsByBusNumber() {
+                let params = new URLSearchParams();
+                params.append("busNumber",_this.modifyForm.number);
+                request({
+                    url: '/student/getPlannedStudents',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.students = res.data.data.list;
+                    } else {
+                        showMessage(_this,"获取学生数据失败！");
+                    }
+                }).catch(error => {
+                    console.log(error)
+
+                })
+            },
 
 		    //左侧区域
 		    handleSelect(key) {
@@ -311,6 +653,8 @@
 	    },
 	    mounted: function () {
 		    _this.search();
+		    _this.fetchBusMom();
+		    _this.fetchBusDriver();
 	    }
     }
 </script >

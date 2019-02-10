@@ -95,17 +95,17 @@ export default
 						name: 'SiteLib',
 						meta: '站点库'
 					},
-					{
-						path: '/home/schoolbus/nightway',
-						component: NightWay,
-						name: 'NightWay',
-						meta: '晚班线路'
-					},
                     {
                         path: '/home/schoolbus/linemamage',
                         component: LineManage,
                         name: 'LineManage',
                         meta: '线路管理'
+                    },
+                    {
+                        path: '/home/schoolbus/nightway',
+                        component: NightWay,
+                        name: 'NightWay',
+                        meta: '晚班线路'
                     },
 				],
 			},
