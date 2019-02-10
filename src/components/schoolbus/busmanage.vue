@@ -50,14 +50,7 @@
             <el-col :span="21">
                 <div style="text-align: left" >
                     <el-row style="margin-top: 10px;margin-bottom: 20px">
-                        <el-col :span="1">
-                            <el-button
-                                    icon="el-icon-delete"
-                                    type="danger"
-                                    @click="onDeleteMore">
-                            </el-button >
-                        </el-col >
-                        <el-col :span="5" :offset="16" >
+                        <el-col :span="3" :offset="19" >
                             <el-input v-model="queryKey"
                                       placeholder="输入关键字查询" clearable
                                       auto-complete="off" ></el-input >
@@ -156,6 +149,80 @@
                 </div >
             </el-col>
         </el-row >
+        <el-dialog :visible.sync="addDialogVisible" width="50%" title="基本信息">
+            <el-form :model="form" style="margin-left: 50px">
+                <el-row>
+                    <el-col :span="6">
+                        <el-form-item label="所属校区：">
+                            <el-select v-model="form.schoolPartition" clearable>
+                                <el-option
+                                        v-for="item in regionList"
+                                        v-bind:value="item.name"
+                                        v-bind:label="item.name">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <div style="height: 1px;width: 95%;background-color: whitesmoke;margin-top: 10px;margin-bottom: 10px"></div>
+                <el-row>
+                    <el-col :span="6">
+                        <el-form-item label="校车编号：">
+                            <el-input v-model="form.number" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" :offset="1">
+                        <el-form-item label="车牌信息：">
+                            <el-input v-model="form.plateNumber" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" :offset="1">
+                        <el-form-item label="校车供应商：">
+                            <el-input v-model="form.busSupplier" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <div style="height: 1px;width: 95%;background-color: whitesmoke;margin-top: 10px;margin-bottom: 10px"></div>
+                <el-row>
+                    <el-col :span="6">
+                        <el-form-item label="校车司机：">
+                            <el-select v-model="form.busDriver" clearable filterable>
+                                <el-option
+                                        v-for="item in driverList"
+                                        v-bind:value="item.id"
+                                        v-bind:label="item.name">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6" :offset="1">
+                        <el-form-item label="Bus妈妈：">
+                            <el-select v-model="form.busMom" clearable filterable>
+                                <el-option
+                                        v-for="item in busMomList"
+                                        v-bind:value="item.id"
+                                        v-bind:label="item.name">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+            <el-alert v-if="isError" style="margin-top: 10px;padding: 5px;"
+                      :title="errorMsg"
+                      type="error"
+                      :closable="false"
+                      show-icon>
+            </el-alert>
+            <el-row style="margin-bottom: 20px;margin-right: 20px">
+                <el-col :span="2" :offset="19">
+                    <el-button @click="addDialogVisible = false" icon="el-icon-close" type="danger">取 消</el-button>
+                </el-col>
+                <el-col :span="2" style="margin-left: 10px">
+                    <el-button type="primary" @click="onConfirmAdd" icon="el-icon-check">提交</el-button>
+                </el-col>
+            </el-row>
+        </el-dialog>
         <el-dialog :visible.sync="modifyDialogVisible" width="60%">
             <el-row>
                 <el-col :span="4">
@@ -369,7 +436,7 @@
         </el-dialog>
         <el-dialog title="提示" :visible.sync="deleteConfirmDialog"
                    append-to-body width="30%" >
-            <span >确认要删除选定的校车吗？</span >
+            <span >确认删除校车【{{selectedItem.number}}】吗？</span >
             <span slot="footer" class="dialog-footer" >
               <el-button class="speacial-button" @click="deleteConfirmDialog = false"
                          icon="el-icon-close" >取 消</el-button >
@@ -403,7 +470,7 @@
 				    selectName: '浦东',
 				    subList: RegionList,
 			    },
-                modifyForm: {
+                form: {
 			        id:"",
                     schoolPartition:"",
                     number:"",
@@ -412,9 +479,12 @@
                     busMom:"",
                     busDriver:""
                 },
+                modifyForm: {
+                },
                 driverList:[],
                 busMomList:[],
                 activeIndex:'1',
+                addDialogVisible: false,
 			    deleteConfirmDialog: false,
                 modifyDialogVisible: false,
 			    selectedItem: {},
@@ -446,15 +516,36 @@
 
 		    },
 		    onAdd() {
+                this.addDialogVisible = true;
 
 		    },
-		    onDeleteMore() {
-			    // _this.multipleSelection
-			    if (!_this.multipleSelection || _this.multipleSelection.length == 0) {
-				    showMessage(_this, "请选择要删除的数据！");
-				    return;
-			    }
-		    },
+            onConfirmAdd() {
+                let params = new URLSearchParams();
+                params.append("busBaseInfo",JSON.stringify(_this.form));
+                request({
+                    url: '/bus/base/info/add',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        showMessage(_this,"新增校车基本信息成功！", 1);
+                        _this.addDialogVisible = false;
+                        _this.search();
+                    } else {
+                        showMessage(_this,"新增校车基本信息失败！");
+                    }
+                }).catch(error => {
+                    console.log(error);
+                })
+
+            },
+		    // onDeleteMore() {
+			 //    // _this.multipleSelection
+			 //    if (!_this.multipleSelection || _this.multipleSelection.length == 0) {
+				//     showMessage(_this, "请选择要删除的数据！");
+				//     return;
+			 //    }
+		    // },
 		    onUpdate(row) {
 			    _this.modifyForm = copyObjectByJSON(row);
 			    _this.modifyDialogVisible = true;
@@ -483,18 +574,25 @@
 			    _this.deleteConfirmDialog = true;
 		    },
 		    onConfirmDelete() {
-			    _this.deleteConfirmDialog = false;
+                let deleteItem = copyObjectByJSON(_this.selectedItem);
+                deleteItem.valid = 0;
 			    let params = new URLSearchParams();
-			    params.append('id', _this.selectedItem.id);
+			    params.append('busBaseInfo', JSON.stringify(deleteItem));
 			    request({
 				    url: `/bus/base/info/delete`,
 				    method: 'post',
 				    data: params
-			    }).then(response => {
-				    showMessage(_this, "删除成功！")
-				    let index = _this.tableData.indexOf(_this.selectedItem);
-				    _this.tableData.splice(index, 1);
-				    _this.selectedItem = {}
+			    }).then(res => {
+                    if (res.data.code == 200) {
+                        showMessage(_this, "删除成功！",1);
+                        let index = _this.tableData.indexOf(_this.selectedItem);
+                        _this.tableData.splice(index, 1);
+                        _this.selectedItem = {}
+                    }
+                    else {
+                        //showMessage(_this,"获取数据失败！");
+                    }
+                    _this.deleteConfirmDialog = false;
 			    }).catch(error => {
 				    showMessage(_this, "删除失败！")
 			    })
@@ -515,7 +613,7 @@
 				    }
 			    }
 			    request({
-				    url: `${HOST}bus/base/info/getBusBaseInfo`,
+				    url: `/bus/base/info/getBusBaseInfo`,
 				    method: 'post',
 				    data: params
 			    }).then(res => {
