@@ -9,16 +9,16 @@
         </el-row >
         <el-row class="well" style="background-color: white;margin-top: 20px;">
             <el-row>
-                <el-col :span="3" style="text-align: center;margin-top: 10px">
-                    <div style="width: 200px;" >
+                <el-col :span="2" style="text-align: center;margin-top: 10px">
+                    <div>
                         <el-button
 
                                 icon="el-icon-plus"
                                 size="normal"
                                 type="primary"
-                                @click="onAdd" >添加线路
+                                @click="onAdd" >线路
                         </el-button >
-                    </div >
+                    </div>
                 </el-col>
                 <!--<el-col :span="1" style="text-align: center;margin-top: 10px">-->
                     <!--<el-button-->
@@ -27,10 +27,10 @@
                             <!--@click="onDeleteMore">-->
                     <!--</el-button >-->
                 <!--</el-col >-->
-                <el-col :span="20">
+                <el-col :span="22">
                     <div style="text-align: left" >
                         <el-row style="margin-top: 10px;margin-bottom: 20px">
-                            <el-col :span="5" :offset="16" >
+                            <el-col :span="4" :offset="18" >
                                 <el-input v-model="queryKey"
                                           placeholder="输入关键字查询" clearable
                                           auto-complete="off" ></el-input >
@@ -464,7 +464,6 @@
                     }).catch(error => {
                         showMessage(_this, error)
                     })
-
                 }
             },
             onConfirmDelete() {

@@ -27,28 +27,27 @@
         </el-row >
         <el-row class="well" style="background-color: white;margin-top: 20px;">
             <el-row>
-                <el-col :span="3" style="text-align: center;margin-top: 10px">
-                    <div style="width: 200px;" >
+                <el-col :span="2" style="text-align: center;margin-top: 10px">
+                    <div>
                         <el-button
-
                                 icon="el-icon-plus"
                                 size="normal"
                                 type="primary"
-                                @click="onAdd" >添加站点
+                                @click="onAdd" >站点
                         </el-button >
                     </div >
                 </el-col>
-                <el-col :span="1" style="text-align: center;margin-top: 10px">
-                    <el-button
-                            icon="el-icon-delete"
-                            type="danger"
-                            @click="onDeleteMore">
-                    </el-button >
-                </el-col >
-                <el-col :span="20">
+                <!--<el-col :span="1" style="text-align: center;margin-top: 10px">-->
+                    <!--<el-button-->
+                            <!--icon="el-icon-delete"-->
+                            <!--type="danger"-->
+                            <!--@click="onDeleteMore">-->
+                    <!--</el-button >-->
+                <!--</el-col >-->
+                <el-col :span="22">
                     <div style="text-align: left" >
                         <el-row style="margin-top: 10px;margin-bottom: 20px">
-                            <el-col :span="5" :offset="16" >
+                            <el-col :span="4" :offset="18" >
                                 <el-input v-model="queryKey"
                                           placeholder="输入关键字查询" clearable
                                           auto-complete="off" ></el-input >
@@ -68,8 +67,6 @@
                     v-loading="loadingUI"
                     element-loading-text="获取数据中..."
                     :data="tableData"
-                    @selection-change="handleSelectionChange"
-                    :default-sort="{prop: 'number', order: 'descending'}"
                     border
                     highlight-current-row
                     empty-text="暂无数据..."
@@ -78,7 +75,10 @@
                 <el-table-column
                         width="75"
                         align="center"
-                        type="selection" >
+                        label="序号">
+                    <template scope="scope">
+                        {{scope.$index+startRow}}
+                    </template>
                 </el-table-column >
                 <el-table-column
                         align="center"
@@ -90,29 +90,39 @@
                         align="center"
                         prop="gpsInfo"
                         sortable
+                        width="250"
                         label="GPS" >
                 </el-table-column >
+                <el-table-column
+                        align="center"
+                        prop="fareRate"
+                        width="200"
+                        label="费用" >
+                </el-table-column >
+                <el-table-column
+                        align="center"
+                        prop="remark"
+                        width="200"
+                        label="Remark" >
+                </el-table-column >
+
                 <el-table-column
                         align="center"
                         width="200"
                         label="操作" >
                     <template scope="scope" >
-                        <el-tooltip placement="top" content="修改" >
-                            <el-button
-                                    size="mini"
-                                    type="primary"
-                                    icon="el-icon-edit"
-                                    @click="onUpdate(scope.row)" >
-                            </el-button >
-                        </el-tooltip >
-                        <el-tooltip placement="top" content="删除" >
-                            <el-button
-                                    size="mini"
-                                    type="danger"
-                                    icon="el-icon-delete"
-                                    @click="onDelete(scope.row)" >
-                            </el-button >
-                        </el-tooltip >
+                        <el-button
+                                size="mini"
+                                type="primary"
+                                icon="el-icon-edit"
+                                @click="onUpdate(scope.row)" >
+                        </el-button >
+                        <el-button
+                                size="mini"
+                                type="danger"
+                                icon="el-icon-delete"
+                                @click="onDelete(scope.row)" >
+                        </el-button >
                     </template >
                 </el-table-column >
             </el-table >
@@ -127,13 +137,81 @@
                 </el-pagination >
             </div >
         </el-row >
+        <el-dialog title="增加站点" :visible.sync="addDialogVisible"
+                   append-to-body width="40%" >
+            <el-form :model="form" style="margin-left: 20px">
+                <el-row>
+                    <el-col :span="10">
+                        <el-form-item label="站点名：" :label-width="formLabelWidth">
+                            <el-input v-model="form.stationName" clearable></el-input>
+                        </el-form-item>
+                    </el-col >
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="GPS：" :label-width="formLabelWidth">
+                            <el-input v-model="form.gpsInfo" clearable></el-input>
+                        </el-form-item>
+                    </el-col >
+                </el-row>
+                <el-row>
+                    <el-col :span="10">
+                        <el-form-item label="费用：" :label-width="formLabelWidth">
+                            <el-input v-model="form.fareRate" clearable></el-input>
+                        </el-form-item>
+                    </el-col >
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="Remark：" :label-width="formLabelWidth">
+                            <el-input v-model="form.remark" clearable></el-input>
+                        </el-form-item>
+                    </el-col >
+                </el-row>
+            </el-form>
+            <span slot="footer" class="dialog-footer" >
+              <el-button class="speacial-button" @click="addDialogVisible = false"
+                         icon="el-icon-close" >取 消</el-button >
+              <el-button type="primary" @click="onConfirmAdd" icon="el-icon-check" >确 定</el-button >
+            </span >
+        </el-dialog >
+        <el-dialog title="编辑站点" :visible.sync="modifyDialogVisible"
+                   append-to-body width="40%" >
+            <el-form :model="modifyForm" style="margin-left: 20px">
+                <el-row>
+                    <el-col :span="10">
+                        <el-form-item label="站点名：" :label-width="formLabelWidth">
+                            <el-input v-model="modifyForm.stationName" clearable></el-input>
+                        </el-form-item>
+                    </el-col >
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="GPS：" :label-width="formLabelWidth">
+                            <el-input v-model="modifyForm.gpsInfo" clearable></el-input>
+                        </el-form-item>
+                    </el-col >
+                </el-row>
+                <el-row>
+                    <el-col :span="10">
+                        <el-form-item label="费用：" :label-width="formLabelWidth">
+                            <el-input v-model="modifyForm.fareRate" clearable></el-input>
+                        </el-form-item>
+                    </el-col >
+                    <el-col :span="10" :offset="1">
+                        <el-form-item label="Remark：" :label-width="formLabelWidth">
+                            <el-input v-model="modifyForm.remark" clearable></el-input>
+                        </el-form-item>
+                    </el-col >
+                </el-row>
+            </el-form>
+            <span slot="footer" class="dialog-footer" >
+              <el-button class="speacial-button" @click="modifyDialogVisible = false"
+                         icon="el-icon-close" >取 消</el-button >
+              <el-button type="primary" @click="onUpdateConfirm" icon="el-icon-check" >确 定</el-button >
+            </span >
+        </el-dialog >
         <el-dialog title="提示" :visible.sync="deleteConfirmDialog"
                    append-to-body width="30%" >
-            <span >确认要删除选定的站点吗？</span >
+            <span >确认删除站点【{{deleteItem.stationName}}】吗？</span >
             <span slot="footer" class="dialog-footer" >
               <el-button class="speacial-button" @click="deleteConfirmDialog = false"
                          icon="el-icon-close" >取 消</el-button >
-              <el-button type="primary" @click="onConfirmDelete" icon="el-icon-check" >确 定</el-button >
+              <el-button type="primary" @click="onDeleteConfirm" icon="el-icon-check" >确 定</el-button >
             </span >
         </el-dialog >
     </div >
@@ -162,10 +240,108 @@
                     subList: RegionList,
                 },
                 deleteConfirmDialog: false,
+                addDialogVisible: false,
+                modifyDialogVisible: false,
                 selectedItem: {},
+                form: {
+                    stationName:"",
+                    gpsInfo:"",
+                    fareRate:"",
+                    remark:""
+                },
+                modifyForm: {
+
+                },
+                deleteItem:{}
             }
         },
         methods: {
+            onUpdate(item) {
+                this.modifyDialogVisible = true;
+                this.modifyForm = item;
+            },
+            onUpdateConfirm() {
+                let tmp = copyObjectByJSON(this.modifyForm);
+                let params = new URLSearchParams();
+                params.append("busStation", JSON.stringify(tmp));
+                request({
+                    url: 'bus/stations/update',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.modifyDialogVisible = false;
+                        showMessage(_this,"编辑站点成功！",1);
+                        _this.search();
+                    }
+                    else {
+                        showMessage(_this,"编辑站点失败！");
+                    }
+
+                }).catch(error => {
+                    showMessage(_this, error)
+                })
+
+            },
+
+            onDelete(item) {
+                _this.deleteItem = item;
+                _this.deleteConfirmDialog = true;
+            },
+            onDeleteConfirm() {
+                let tmp = copyObjectByJSON(this.deleteItem);
+                tmp.valid = 0;
+                let params = new URLSearchParams();
+                params.append("busStation", JSON.stringify(tmp));
+                request({
+                    url: 'bus/stations/update',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.deleteConfirmDialog = false;
+                        showMessage(_this,"删除站点成功！",1);
+                        _this.search();
+                    }
+                    else {
+                        showMessage(_this,"删除站点失败！");
+                    }
+
+                }).catch(error => {
+                    showMessage(_this, error)
+                })
+            },
+            onAdd() {
+                this.addDialogVisible = true;
+
+            },
+            onConfirmAdd() {
+                if(this.form.stationName == null || this.form.stationName ===  "") {
+                    showMessage(_this,"站点名不能为空！");
+                } else {
+                    let station = copyObjectByJSON(this.form);
+                    let params = new URLSearchParams();
+                    params.append("busStation", JSON.stringify(station));
+                    request({
+                        url: 'bus/stations/add',
+                        method: 'post',
+                        data: params
+                    }).then(res => {
+                        if (res.data.code == 200) {
+                            _this.addDialogVisible = false;
+                            showMessage(_this,"增加站点成功！",1);
+                            _this.search();
+                        }
+                        else {
+                            showMessage(_this,"增加站点失败！");
+                        }
+
+                    }).catch(error => {
+                        showMessage(_this, error)
+                    })
+                }
+            },
+
             handleCurrentChange(val) {
                 this.currentPage = val;
                 this.search();
@@ -175,6 +351,7 @@
                 let condition = {
                     page: _this.currentPage,
                     size: _this.pageSize,
+                    queryKey:_this.queryKey
                 }
                 let params = new URLSearchParams();
                 if (condition) {
@@ -184,7 +361,7 @@
                     }
                 }
                 request({
-                    url: '/bus/stations/list',
+                    url: '/bus/stations/search',
                     method: 'post',
                     data: params
                 }).then(res => {
@@ -196,10 +373,7 @@
                     else {
                         showMessage(_this,"获取数据失败！");
                     }
-                    // _this.multipleSelection = [];
                     _this.loadingUI = false;
-
-
                 }).catch(error => {
                     console.log(error)
                     _this.loadingUI = false;

@@ -50,7 +50,7 @@
             <el-col :span="21">
                 <div style="text-align: left" >
                     <el-row style="margin-top: 10px;margin-bottom: 20px">
-                        <el-col :span="3" :offset="19" >
+                        <el-col :span="4" :offset="18" >
                             <el-input v-model="queryKey"
                                       placeholder="输入关键字查询" clearable
                                       auto-complete="off" ></el-input >
