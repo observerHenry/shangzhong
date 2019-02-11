@@ -1,12 +1,12 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div style="width: 100%;height: 100%;padding: 24px" >
-        <el-row >
-            <el-col :span="2">
-                <div style="margin: 10px;">
-                    <span style="font-weight: 600;color:#5D5D5D;font-size: 15px">线路列表</span >
-                </div>
-            </el-col >
-        </el-row >
+        <!--<el-row >-->
+            <!--<el-col :span="2">-->
+                <!--<div style="margin: 10px;">-->
+                    <!--<span style="font-weight: 600;color:#5D5D5D;font-size: 15px">线路列表</span >-->
+                <!--</div>-->
+            <!--</el-col >-->
+        <!--</el-row >-->
         <el-row class="well" style="background-color: white;margin-top: 20px;">
             <el-row>
                 <el-col :span="2" style="text-align: center;margin-top: 10px">
@@ -549,7 +549,7 @@
             fetchStations() {
                 let params = new URLSearchParams();
                 request({
-                    url: '/bus/stations/list',
+                    url: '/bus/stations/search',
                     method: 'post',
                     data: params
                 }).then(res => {

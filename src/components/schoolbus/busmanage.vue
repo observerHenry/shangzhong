@@ -1,42 +1,42 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml" >
     <div style="width: 100%;height: 100%;padding: 24px" >
-        <el-row >
-            <el-col :span="2">
-                <div style="margin: 10px;">
-                    <span style="font-weight: 600;color:#5D5D5D;font-size: 15px">校车列表</span >
-                </div>
-            </el-col >
-            <el-col :span="2" :offset="18" >
-                <el-button
-		                icon="el-icon-download"
-		                size="normal"
-		                type="primary"
-		                style="text-align: right;color: white;"
-		                @click="onImport" >导入
-                </el-button >
-            </el-col >
-            <el-col :span="1" style="margin-left: 20px">
-                <el-button
-		                icon="el-icon-upload2"
-		                size="normal"
-		                type="primary"
-		                style="text-align: right"
-		                @click="onExport" >导出
-                </el-button >
-            </el-col >
-        </el-row >
+        <!--<el-row >-->
+            <!--<el-col :span="2">-->
+                <!--<div style="margin: 10px;">-->
+                    <!--<span style="font-weight: 600;color:#5D5D5D;font-size: 15px">校车列表</span >-->
+                <!--</div>-->
+            <!--</el-col >-->
+            <!--<el-col :span="2" :offset="18" >-->
+                <!--<el-button-->
+		                <!--icon="el-icon-download"-->
+		                <!--size="normal"-->
+		                <!--type="primary"-->
+		                <!--style="text-align: right;color: white;"-->
+		                <!--@click="onImport" >导入-->
+                <!--</el-button >-->
+            <!--</el-col >-->
+            <!--<el-col :span="1" style="margin-left: 20px">-->
+                <!--<el-button-->
+		                <!--icon="el-icon-upload2"-->
+		                <!--size="normal"-->
+		                <!--type="primary"-->
+		                <!--style="text-align: right"-->
+		                <!--@click="onExport" >导出-->
+                <!--</el-button >-->
+            <!--</el-col >-->
+        <!--</el-row >-->
         <el-row class="well" style="background-color: white;margin-top: 20px;">
             <el-col :span="3" style="text-align: center;margin-top: 10px">
-                <div style="width: 200px;" >
+                <div>
                     <el-button
 
                             icon="el-icon-plus"
                             size="normal"
                             type="primary"
-                            @click="onAdd" >添加校车
+                            @click="onAdd" >校车
                     </el-button >
                 </div >
-                <div style="width: 200px;margin-top: 20px">
+                <div style="margin-top: 20px">
                     <el-menu
                             style="background-color: transparent;min-height: 480px;text-align: center;border-right: transparent"
                             :default-active="regionData.selectId" @select="handleSelect" >
@@ -223,10 +223,10 @@
                 </el-col>
             </el-row>
         </el-dialog>
-        <el-dialog :visible.sync="modifyDialogVisible" width="60%">
+        <el-dialog :visible.sync="modifyDialogVisible" width="65%">
             <el-row>
                 <el-col :span="4">
-                    <el-menu :default-active="activeIndex" style="min-height: 400px;width: 200px" @select="handleBusSelect">
+                    <el-menu :default-active="activeIndex" style="min-height: 400px" @select="handleBusSelect">
                         <el-menu-item index="1">
                             <i class="el-icon-document"></i>
                             <span slot="title">基本信息</span>
@@ -242,7 +242,7 @@
                     </el-menu>
                 </el-col>
 
-                <el-col :span="18" :offset="1">
+                <el-col :span="19" :offset="1">
                     <div v-show="activeIndex == '1'">
                         <h4>基本信息</h4>
                         <el-form :model="modifyForm">
@@ -313,8 +313,8 @@
                             <el-col :span="2" :offset="18">
                                 <el-button @click="modifyDialogVisible = false" icon="el-icon-close" type="danger">取 消</el-button>
                             </el-col>
-                            <el-col :span="3" :offset="1">
-                                <el-button type="primary" @click="onConfirmEdit" icon="el-icon-check">保存修改</el-button>
+                            <el-col :span="2" :offset="2">
+                                <el-button type="primary" @click="onConfirmEdit" icon="el-icon-check">保 存</el-button>
                             </el-col>
                         </el-row>
                     </div>
@@ -396,31 +396,26 @@
                             <el-table-column
                                     align="center"
                                     prop="station"
-                                    width="120"
+                                    width="100"
                                     label="头像">
 
                             </el-table-column>
                             <el-table-column
                                     align="center"
                                     prop="name"
-                                    width="120"
-                                    sortable
+                                    width="100"
                                     label="姓名">
-
                             </el-table-column>
                             <el-table-column
                                     align="center"
                                     prop="banjiName"
-                                    width="120"
-                                    sortable
+                                    width="80"
                                     label="班级">
-
                             </el-table-column>
                             <el-table-column
                                     align="center"
                                     prop="busNumber"
-                                    width="120"
-                                    sortable
+                                    width="60"
                                     label="校车">
 
                             </el-table-column>

@@ -1,30 +1,30 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div style="width: 100%;height: 100%;padding: 24px" >
-        <el-row >
-            <el-col :span="2">
-                <div style="margin: 10px;">
-                    <span style="font-weight: 600;color:#5D5D5D;font-size: 15px">站点列表</span >
-                </div>
-            </el-col >
-            <el-col :span="2" :offset="18" >
-                <el-button
-                        icon="el-icon-download"
-                        size="normal"
-                        type="primary"
-                        style="text-align: right;color: white;"
-                        @click="onImport" >导入
-                </el-button >
-            </el-col >
-            <el-col :span="1" style="margin-left: 20px">
-                <el-button
-                        icon="el-icon-upload2"
-                        size="normal"
-                        type="primary"
-                        style="text-align: right"
-                        @click="onExport" >导出
-                </el-button >
-            </el-col >
-        </el-row >
+        <!--<el-row >-->
+            <!--<el-col :span="2">-->
+                <!--<div style="margin: 10px;">-->
+                    <!--<span style="font-weight: 600;color:#5D5D5D;font-size: 15px">站点列表</span >-->
+                <!--</div>-->
+            <!--</el-col >-->
+            <!--<el-col :span="2" :offset="18" >-->
+                <!--<el-button-->
+                        <!--icon="el-icon-download"-->
+                        <!--size="normal"-->
+                        <!--type="primary"-->
+                        <!--style="text-align: right;color: white;"-->
+                        <!--@click="onImport" >导入-->
+                <!--</el-button >-->
+            <!--</el-col >-->
+            <!--<el-col :span="1" style="margin-left: 20px">-->
+                <!--<el-button-->
+                        <!--icon="el-icon-upload2"-->
+                        <!--size="normal"-->
+                        <!--type="primary"-->
+                        <!--style="text-align: right"-->
+                        <!--@click="onExport" >导出-->
+                <!--</el-button >-->
+            <!--</el-col >-->
+        <!--</el-row >-->
         <el-row class="well" style="background-color: white;margin-top: 20px;">
             <el-row>
                 <el-col :span="2" style="text-align: center;margin-top: 10px">
