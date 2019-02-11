@@ -86,7 +86,7 @@
                             label="头像">
                         <template scope="scope">
                             <img style=" height: 50px;width:50px; border: solid 2px lightskyblue; border-radius: 50%;align-items: center;justify-content: center;
-                                    overflow: hidden;" :src="getPhoto()"/>
+                                    overflow: hidden;" :src="getPhoto(scope.row.headImg)"/>
                         </template>
                     </el-table-column>
                     <el-table-column label="姓名"
@@ -174,8 +174,19 @@
                     <div v-show="activeIndex == '1'">
                         <h4>基本信息</h4>
                         <img style=" height: 60px;width:60px; border: solid 2px lightskyblue; border-radius: 50%;align-items: center;justify-content: center;
-                                    overflow: hidden; margin-top: 10px" :src="getPhoto()"/>
-                        <el-form :model="modifyForm">
+                                    overflow: hidden; margin-top: 10px" :src="getPhoto(modifyForm.headImg)"/>
+                        <el-upload
+                                action=""
+                                :limit="1"
+                                :multiple="false"
+                                :file-list="fileList"
+                                accept=".png"
+                                :on-change="handlePreview"
+                                :auto-upload="false">
+                            <el-button size="small" type="primary">更换照片</el-button>
+                            <div slot="tip" class="el-upload__tip">只能上传png文件，且不超过2M</div>
+                        </el-upload>
+                        <el-form :model="modifyForm" label-position="top">
                             <el-row style="margin-top: 10px">
                                 <el-col :span="5">
                                     <el-form-item label="学号：">
@@ -282,10 +293,15 @@
                 busStations:[],
                 allBusStations:[],
                 allBusLine:[],
-                currentStudent:{}
+                currentStudent:{},
+                fileList:[]
             }
         },
         methods: {
+
+            handlePreview(file, fileList) {
+                alert(JSON.stringify(file))
+            },
             onBusChange(newBusNumber) {
                 _this.modifyForm.boardStationMorning = "";
                 _this.modifyForm.boardStationAfternoon = "";
@@ -382,8 +398,8 @@
                 _this.startRow = 1;
                 _this.fetchStudents();
             },
-            getPhoto() {
-                return image;
+            getPhoto(img) {
+                return encodeURI(STUDENT_IMG_BASE + img);
             },
             addStudent() {
 
@@ -519,5 +535,8 @@
     }
 </script>
 <style>
+    input[type=file] {
+        display: none;
+    }
 
 </style>
