@@ -33,7 +33,7 @@
                             size="normal"
                             type="primary"
                             style="text-align: right"
-                            @click="addStudent">学生
+                            @click="handleAdd">学生
                     </el-button>
                     <el-tree :data="classArrays"
                              :props="defaultProps"
@@ -48,11 +48,11 @@
                     <!--<el-col :span="2">-->
                         <!--<el-button type="danger" icon="el-icon-delete"></el-button>-->
                     <!--</el-col>-->
-                    <el-col :span="4" :offset="17">
-                        <el-input v-model="searchContent" placeholder="请输入关键词"></el-input>
+                    <el-col :span="7" :offset="14">
+                        <el-input v-model="queryKey" placeholder="根据学号、姓名、站点、校车编号模糊查询" clearable></el-input>
                     </el-col>
                     <el-col :span="2" style="margin-left: 10px">
-                        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+                        <el-button type="primary" icon="el-icon-search" @click="fetchStudents">搜索</el-button>
                     </el-col>
                 </el-row>
                 <el-table
@@ -173,19 +173,29 @@
                 <el-col :span="19" :offset="1">
                     <div v-show="activeIndex == '1'">
                         <h4>基本信息</h4>
-                        <img style=" height: 60px;width:60px; border: solid 2px lightskyblue; border-radius: 50%;align-items: center;justify-content: center;
-                                    overflow: hidden; margin-top: 10px" :src="getPhoto(modifyForm.headImg)"/>
-                        <el-upload
-                                action=""
-                                :limit="1"
-                                :multiple="false"
-                                :file-list="fileList"
-                                accept=".png"
-                                :on-change="handlePreview"
-                                :auto-upload="false">
-                            <el-button size="small" type="primary">更换照片</el-button>
-                            <div slot="tip" class="el-upload__tip">只能上传png文件，且不超过2M</div>
-                        </el-upload>
+                        <el-row>
+                            <el-col :span="2">
+                                <img style=" height: 60px;width:60px; border: solid 2px lightskyblue; border-radius: 50%;align-items: center;justify-content: center;
+                                    overflow: hidden; margin-top: 10px" :src="modifyPhoto(modifyForm.headImg)"/>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-upload
+                                        action=""
+                                        :limit="1"
+                                        :multiple="false"
+                                        :file-list="fileList"
+                                        :show-file-list="true"
+                                        accept=".png,.jpg"
+                                        :on-change="handlePhotoChange"
+                                        :on-remove="handleRemove"
+                                        :on-exceed="handleExceed"
+                                        :auto-upload="false"
+                                        style="margin-top: 25px;margin-left: 20px">
+                                    <el-button size="mini" type="primary" plain>更换</el-button>
+                                    <div slot="tip" class="el-upload__tip">仅限于PNG/JPG文件，且不超过2M</div>
+                                </el-upload>
+                            </el-col>
+                        </el-row>
                         <el-form :model="modifyForm" label-position="top">
                             <el-row style="margin-top: 10px">
                                 <el-col :span="5">
@@ -256,6 +266,109 @@
                 </el-col>
             </el-row>
         </el-dialog>
+        <el-dialog :visible.sync="addDialogVisible" width="65%">
+            <el-row>
+                <el-col :span="22" :offset="1">
+                    <h4>基本信息</h4>
+                    <el-row>
+                        <el-col :span="2">
+                            <img style=" height: 60px;width:60px; border: solid 2px lightskyblue; border-radius: 50%;align-items: center;justify-content: center;
+                                overflow: hidden; margin-top: 10px" :src="modifyPhoto(form.headImg)" v-show="form.headImg != '' || photoData != null"/>
+                        </el-col>
+                        <el-col :span="6">
+                            <el-upload
+                                    action=""
+                                    :limit="1"
+                                    :multiple="false"
+                                    :file-list="fileList"
+                                    :show-file-list="true"
+                                    accept=".png,.jpg"
+                                    :on-change="handlePhotoChange"
+                                    :on-remove="handleRemove"
+                                    :on-exceed="handleExceed"
+                                    :auto-upload="false"
+                                    style="margin-top: 25px;margin-left: 20px">
+                                <el-button size="mini" type="primary" plain>上传</el-button>
+                                <div slot="tip" class="el-upload__tip">仅限于PNG/JPG文件，且不超过2M</div>
+                            </el-upload>
+                        </el-col>
+                    </el-row>
+                    <el-form :model="form" label-position="top">
+                        <el-row style="margin-top: 10px">
+                            <el-col :span="5">
+                                <el-form-item label="学号：">
+                                    <el-input v-model="form.studentNumber"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8" :offset="1">
+                                <el-form-item label="姓名：">
+                                    <el-input v-model="form.name"></el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8" :offset="1">
+                                <el-form-item label="班级：">
+                                    <el-select v-model="form.banji" clearable>
+                                        <el-option
+                                                v-for="item in allClasses"
+                                                v-bind:value="item.id"
+                                                v-bind:label="item.className">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row style="margin-top: 10px">
+                            <el-col :span="5">
+                                <el-form-item label="所属校车：">
+                                    <el-select v-model="form.busNumber" @change="onAddBusChange" clearable filterable>
+                                        <el-option
+                                                v-for="item in busList"
+                                                v-bind:value="item.number"
+                                                v-bind:label="item.number">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8" :offset="1">
+                                <el-form-item label="早班接送点：">
+                                    <el-select v-model="form.boardStationMorning" clearable>
+                                        <el-option
+                                                v-for="item in busStations"
+                                                v-bind:value="item.id"
+                                                v-bind:label="item.stationName">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="8" :offset="1">
+                                <el-form-item label="午班下车点：">
+                                    <el-select v-model="form.boardStationAfternoon" clearable>
+                                        <el-option
+                                                v-for="item in busStations"
+                                                v-bind:value="item.id"
+                                                v-bind:label="item.stationName">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                    </el-form>
+                    <el-row style="margin-top: 20px">
+                        <el-col :span="7" :offset="17">
+                            <el-button @click="addDialogVisible = false" icon="el-icon-close" type="danger">取 消</el-button>
+                            <el-button type="primary" @click="onAdd" icon="el-icon-check">提 交</el-button>
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+        </el-dialog>
+        <el-dialog title="提示" :visible.sync="deleteConfirmVisible"  width="30%">
+            <span >确认要删除学生[ <b >{{deleteItem.name}}</b > ]吗？</span >
+            <span slot="footer" class="dialog-footer" >
+                <el-button @click="deleteConfirmVisible = false" icon="el-icon-close" >取 消</el-button >
+                <el-button type="primary" @click="onConfirmDelete" icon="el-icon-check">确 定</el-button >
+            </span >
+        </el-dialog >
     </div>
 
 </template>
@@ -277,7 +390,7 @@
                 tableData: [],
                 totalRecords:0,
                 currentGrade:"",
-                searchContent: "",
+                queryKey: "",
                 classArrays: [],
                 loadingUI:false,
                 allClasses: [
@@ -288,25 +401,82 @@
                     label: 'label'
                 },
                 modifyForm: {},
+                form: {
+                    headImg:"",
+                    studentNumber:"",
+                    name:"",
+                    banji:"",
+                    busNumber:"",
+                    boardStationMorning:"",
+                    boardStationAfternoon:""
+                },
                 modifyDialogVisible: false,
+                addDialogVisible:false,
+                deleteConfirmVisible:false,
                 activeIndex: "1",
                 busStations:[],
                 allBusStations:[],
                 allBusLine:[],
                 currentStudent:{},
-                fileList:[]
+                fileList:[],
+                photoData:"",
+                deleteItem:""
             }
         },
         methods: {
-
-            handlePreview(file, fileList) {
-                alert(JSON.stringify(file))
+            handleDelete(index, item) {
+                _this.deleteConfirmVisible = true;
+                _this.deleteItem = item;
+            },
+            onConfirmDelete() {
+                let params = new URLSearchParams();
+                params.append("student", JSON.stringify(_this.deleteItem));
+                request({
+                    url: '/student/delete',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.tableData.splice(_this.tableData.indexOf(_this.item),1);
+                        _this.deleteConfirmVisible = false;
+                        showMessage(_this,"删除学生数据成功！",1);
+                    } else {
+                        showMessage(_this,"删除学生数据失败！");
+                    }
+                }).catch(error => {
+                    console.log(error);
+                })
+            },
+            handlePhotoChange(file, fileList) {
+                var reader = new FileReader();
+                if(file.size > PHOTO_SIZE_LIMIT) {
+                    showMessage(_this, "文件大小超过2M");
+                } else {
+                    reader.readAsDataURL(file.raw);
+                    reader.onload = function(e){
+                        // 这个就是base64编码了
+                        _this.photoData = this.result;
+                    }
+                }
+            },
+            handleRemove(file, fileList) {
+                _this.fileList = [];
+                _this.photoData = "";
+            },
+            handleExceed(file, fileList) {
+                showMessage(_this, "请先删除已选择文件!");
             },
             onBusChange(newBusNumber) {
                 _this.modifyForm.boardStationMorning = "";
                 _this.modifyForm.boardStationAfternoon = "";
                 _this.modifyForm.busNumber = newBusNumber;
-                _this.fetchBusLine();
+                _this.fetchBusLine(newBusNumber);
+            },
+            onAddBusChange(newBusNumber) {
+                _this.form.boardStationMorning = "";
+                _this.form.boardStationAfternoon = "";
+                _this.form.busNumber = newBusNumber;
+                _this.fetchBusLine(newBusNumber);
             },
             handleStuSelect(index) {
                 _this.activeIndex = index;
@@ -387,7 +557,6 @@
                     } else {
                         showMessage(_this,"获取数据失败！");
                     }
-
                 }).catch(error => {
                     console.log(error)
                 })
@@ -399,47 +568,65 @@
                 _this.fetchStudents();
             },
             getPhoto(img) {
+                if(img == null || img == '') {
+                    return require("../../assets/img/avator.png")
+                }
                 return encodeURI(STUDENT_IMG_BASE + img);
             },
-            addStudent() {
-
-            },
-            fetchStudents() {
-                if(!isUndefined(_this.currentGrade.id)) {
-                    let params = new URLSearchParams();
-                    params.append("className",_this.currentGrade.label);
-                    params.append("page", _this.currentPage);
-                    params.append("size", _this.pageSize);
-                    request({
-                        url: '/student/getStudents',
-                        method: 'post',
-                        data: params
-                    }).then(res => {
-                        if (res.data.code == 200) {
-                            _this.totalRecords = res.data.data.total;
-                            _this.tableData = res.data.data.list;
-                            _this.startRow = res.data.data.startRow;
-                        } else {
-                            showMessage(_this,"获取数据失败！");
-                        }
-                        _this.loadingUI = false;
-
-                    }).catch(error => {
-                        console.log(error)
-                        _this.loadingUI = false;
-
-                    })
+            modifyPhoto(img) {
+                if(_this.photoData !== "") {
+                    return _this.photoData;
+                } else {
+                    return encodeURI(STUDENT_IMG_BASE + img);
                 }
             },
-            fetchBusLine() {
+            fetchStudents() {
+                // if(!isUndefined(_this.currentGrade.id)) {
                 let params = new URLSearchParams();
-                params.append("busNumber",_this.modifyForm.busNumber);
+                if(isUndefined(_this.currentGrade.label)) {
+                    params.append("gradeName","");
+                    params.append("className","");
+                } else {
+                    if(_this.currentGrade.label.indexOf("年级") != -1) {
+                        params.append("gradeName",_this.currentGrade.label);
+                    } else {
+                        params.append("className",_this.currentGrade.label);
+                    }
+                }
+                params.append("page", _this.currentPage);
+                params.append("size", _this.pageSize);
+                params.append("queryKey", _this.queryKey);
+                request({
+                    url: '/student/getStudents',
+                    method: 'post',
+                    data: params
+                }).then(res => {
+                    if (res.data.code == 200) {
+                        _this.totalRecords = res.data.data.total;
+                        _this.tableData = res.data.data.list;
+                        _this.startRow = res.data.data.startRow;
+                    } else {
+                        showMessage(_this,"获取数据失败！");
+                    }
+                    _this.loadingUI = false;
+
+                }).catch(error => {
+                    console.log(error)
+                    _this.loadingUI = false;
+
+                })
+                // }
+            },
+            fetchBusLine(busNumber) {
+                let params = new URLSearchParams();
+                params.append("busNumber",busNumber);
                 request({
                     url: '/bus/line/getBusLineByBusNumber',
                     method: 'post',
                     data: params
                 }).then(res => {
                     if (res.data.code == 200) {
+                        _this.allBusLine = res.data.data.list;
                         if(res.data.data.list.length > 0) {
                             _this.busStations = [];
                             let tmpList = res.data.data.list[0].stations.split(",");
@@ -471,52 +658,105 @@
                 })
             },
             handleEdit(index, data) {
+                _this.photoData = "";
                 _this.currentStudent = data;
                 _this.modifyForm = copyObjectByJSON(data);
                 _this.modifyDialogVisible = true;
                 _this.activeIndex = "1";
-                _this.fetchBusLine();
+                _this.fileList = [];
+                _this.fetchBusLine(_this.modifyForm.busNumber);
             },
             onEdit() {
-                if(_this.modifyForm.studentNumber == null || _this.modifyForm.studentNumber == "") {
-                    showMessage(_this,"学号不能为空！");
-                } else if(_this.modifyForm.name == null || _this.modifyForm.name == "") {
-                    showMessage(_this,"姓名不能为空！");
-                } else if(_this.modifyForm.banji == null || _this.modifyForm.banji == "") {
-                    showMessage(_this,"班级不能为空！");
-                } else if(_this.modifyForm.busNumber == null || _this.modifyForm.busNumber == "") {
-                    showMessage(_this,"校车不能为空！");
-                } else if(_this.modifyForm.boardStationMorning == null
-                    || _this.modifyForm.boardStationMorning == ""
-                    || _this.modifyForm.boardStationMorning == 0) {
-                    showMessage(_this,"早班站点不能为空！");
-                } else if(_this.modifyForm.boardStationAfternoon == null
-                    || _this.modifyForm.boardStationAfternoon == ""
-                    || _this.modifyForm.boardStationAfternoon == 0) {
-                    showMessage(_this,"午班站点不能为空！");
-                } else if(_this.modifyForm.boardStationAfternoon != _this.modifyForm.boardStationMorning) {
-                    showMessage(_this,"早班站点和午班站点不一致！");
-                } else {
+                 if(_this.verifyForm(_this.modifyForm)){
                     let params = new URLSearchParams();
                     params.append("student",JSON.stringify(_this.modifyForm));
+                    params.append("photoData",_this.photoData);
                     request({
                         url: '/student/update',
                         method: 'post',
                         data: params
                     }).then(res => {
                         if (res.data.code == 200) {
-                            _this.currentStudent = copyObjectByJSON(_this.modifyForm);
+                            _this.modifyDialogVisible = false;
+                            _this.fetchStudents();
                             showMessage(_this, "保存学生信息成功",1);
                         } else {
                             showMessage(_this, "保存学生信息失败");
                         }
                     }).catch(error => {
                         console.log(error)
-                        _this.loadingUI = false;
-
                     })
-
                 }
+            },
+            handleAdd(){
+                _this.photoData = "";
+                _this.addDialogVisible = true;
+                _this.fileList = [];
+            },
+            onAdd() {
+                if(_this.verifyForm(_this.form)){
+                    let params = new URLSearchParams();
+                    let paramObj  = copyObjectByJSON(_this.form);
+                    paramObj.busLineMorning = _this.filterBusLineByBus("早班");
+                    paramObj.busLineAfternoon = _this.filterBusLineByBus("午班");
+                    params.append("student",JSON.stringify(paramObj));
+                    params.append("photoData",_this.photoData);
+                    request({
+                        url: '/student/add',
+                        method: 'post',
+                        data: params
+                    }).then(res => {
+                        if (res.data.code == 200) {
+                            _this.addDialogVisible = false;
+                            _this.fetchStudents();
+                            showMessage(_this, "添加学生信息成功",1);
+                        } else {
+                            showMessage(_this, "添加学生信息失败");
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }
+            },
+            verifyForm(formObj) {
+                let result = true;
+                if(formObj.studentNumber == null || formObj.studentNumber == "") {
+                    showMessage(_this,"学号不能为空！");
+                    result = false;
+                } else if(formObj.name == null || formObj.name == "") {
+                    showMessage(_this,"姓名不能为空！");
+                    result = false;
+                } else if(formObj.banji == null || formObj.banji == "") {
+                    showMessage(_this,"班级不能为空！");
+                    result = false;
+                } else if(formObj.busNumber == null || formObj.busNumber == "") {
+                    showMessage(_this,"校车不能为空！");
+                    result = false;
+                } else if(formObj.boardStationMorning == null
+                    || formObj.boardStationMorning == ""
+                    || formObj.boardStationMorning == 0) {
+                    showMessage(_this,"早班站点不能为空！");
+                    result = false;
+                } else if(formObj.boardStationAfternoon == null
+                    || formObj.boardStationAfternoon == ""
+                    || formObj.boardStationAfternoon == 0) {
+                    showMessage(_this,"午班站点不能为空！");
+                    result = false;
+                } else if(formObj.boardStationAfternoon != formObj.boardStationMorning) {
+                    showMessage(_this,"早班站点和午班站点不一致！");
+                    result = false;
+                }
+                return result;
+            },
+            filterBusLineByBus(mode) {
+                let result = "";
+                for (let i = 0; i < _this.allBusLine.length; i++) {
+                    if(mode === _this.allBusLine[i].mode) {
+                        result = _this.allBusLine[i].id;
+                        break;
+                    }
+                }
+                return result;
             }
         },
         computed: {},
@@ -531,6 +771,7 @@
             _this.getClasses();
             _this.getBusList();
             _this.fetchStations();
+            _this.fetchStudents();
         }
     }
 </script>

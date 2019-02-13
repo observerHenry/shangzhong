@@ -6,6 +6,7 @@ var DOWNLOADPATH = IP + "/oll/";
 var SOCKECT_ADDR = "ws://127.0.0.1:9998";//CRHService IP address(Windows service)
 var SYSTEMNAME = "上海中学校车管理系统";
 const STUDENT_IMG_BASE = "http://127.0.0.1/shzxBusImages/studentImg/";
+const PHOTO_SIZE_LIMIT = 1024 * 1024 * 2;//2M
 
 var EveryPageNum = 10;
 
