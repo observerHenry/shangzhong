@@ -3,23 +3,11 @@
         <el-form :model="condition" label-position="right" >
             <el-row >
                 <el-col :span="4" >
-                    <el-date-picker
-		                    v-model="condition.selectDate"
-		                    type="daterange"
-		                    align="left"
-		                    unlink-panels
-		                    range-separator="—"
-		                    start-placeholder="开始日期"
-		                    end-placeholder="结束日期"
-		                    :picker-options="pickerOptions" >
-                    </el-date-picker >
-                </el-col >
-                <el-col :span="4" :offset="1" >
                     <el-input :span="3" v-model="condition.keyWord"
                               placeholder="请输入要查询的条件" clearable
                               auto-complete="off" ></el-input >
                 </el-col >
-                <el-col :span="2" :offset="1" >
+                <el-col :span="2" style="margin-left: 20px">
                     <el-button
 		                    icon="el-icon-search"
 		                    size="normal"
@@ -30,7 +18,7 @@
 
             </el-row >
             <el-row style="margin-top: 10px;" >
-                <el-col :span="4" >
+                <el-col :span="4">
                     <el-form-item label="" >
                         <el-select v-model="condition.busNumber" clearable placeholder="请选择校车" >
                             <el-option
@@ -41,7 +29,7 @@
                         </el-select >
                     </el-form-item >
                 </el-col >
-                <el-col :span="4" :offset="1" >
+                <el-col :span="4" style="margin-left: 20px">
                     <el-form-item label="" >
                         <el-select v-model="condition.busStation" clearable placeholder="请选择站点" >
                             <el-option
@@ -52,7 +40,7 @@
                         </el-select >
                     </el-form-item >
                 </el-col >
-                <el-col :span="4" :offset="1" >
+                <el-col :span="4" style="margin-left: 20px" >
                     <el-form-item label="" >
                         <el-select v-model="condition.gradeName" clearable placeholder="请选择年级" >
                             <el-option
@@ -63,7 +51,7 @@
                         </el-select >
                     </el-form-item >
                 </el-col >
-                <el-col :span="4" :offset="1" >
+                <el-col :span="4" style="margin-left: 20px">
                     <el-form-item label="" >
                         <el-select v-model="condition.className" clearable placeholder="请选择班级" >
                             <el-option
@@ -73,6 +61,18 @@
                             </el-option >
                         </el-select >
                     </el-form-item >
+                </el-col >
+                <el-col :span="4" style="margin-left: 20px">
+                    <el-date-picker
+                            v-model="condition.selectDate"
+                            type="daterange"
+                            align="left"
+                            unlink-panels
+                            range-separator="—"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            :picker-options="pickerOptions" >
+                    </el-date-picker >
                 </el-col >
             </el-row >
         </el-form >
